@@ -1,0 +1,59 @@
+<loading [state]="loading">
+    <div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="page-header">States Edit</h4>
+            </div>
+            <div class="col-md-6 pull-right" style="text-align: right">
+                <app-help [heading]="help_heading" [description]="help_description"></app-help>
+                <button type="button" class="btn btn-primary" (click)="btnClickNav('states')">
+                    <i class="fa fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <hr/>
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form role="form" [formGroup]="form">
+                        <div class="card bg-light mb-3">
+                            <div class="card-header" style="background-color:#868e96; color: #fff;">State Edit</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-4">
+                                        <label>State Name</label>
+                                        <input class="form-control" type="text" [(ngModel)]="states.state_name" name="state_name" placeholder="State Name" formControlName="state_name"
+                                            [ngClass]="displayFieldCss('state_name')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('state_name')">
+                                            Please enter state name
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Tin Number</label>
+                                        <input class="form-control" type="text" appOnlyNumber [(ngModel)]="states.tin_number" name="tin_number" placeholder="Tin Number"
+                                            formControlName="tin_number" [ngClass]="displayFieldCss('tin_number')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('tin_number')">
+                                            Please enter tin number
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>State Code</label>
+                                        <input class="form-control" type="text" [(ngModel)]="states.state_code" name="state_code" placeholder="State Code" formControlName="state_code"
+                                            [ngClass]="displayFieldCss('state_code')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('state_code')">
+                                            Please enter state code
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12" style="text-align: right">
+                                        <button type="submit" class="btn btn-primary" (click)="updateState()">Submit</button>
+                                        <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</loading>

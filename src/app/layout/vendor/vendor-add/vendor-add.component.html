@@ -1,0 +1,229 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">Vendor Add</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+        <button type="button" class="btn btn-primary" (click)="btnClickNav('vendor')">
+          <i class="fa fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+    <div>
+      <div class="row">
+        <div class="col-md-12">
+          <form role="form" [formGroup]="form" novalidate>
+            <div class="card bg-light mb-3">
+              <div class="card-header" style="background-color:#868e96; color: #fff;">Vendor Add</div>
+              <div class="card-body">
+                <div class="card bg-light mb-3">
+                  <div class="card-header">General Information</div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="form-group col-md-4">
+                        <label>Vendor Name</label>
+                        <input type="text" class="form-control" name="vendor_fullname" placeholder="Vendor Name" formControlName="vendor_fullname"
+                          [ngClass]="displayFieldCss('vendor_fullname')">
+                        <div class="invalid-feedback" *ngIf="form.controls['vendor_fullname'].hasError('required')">
+                          Please enter vendor name
+                        </div>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>Vendor Type</label>
+                        <select class="form-control" name="type" formControlName="vendor_type" [ngClass]="displayFieldCss('vendor_type')">
+                          <option value="">Select type</option>
+                          <option value="{{vendor.id}}" *ngFor="let vendor of vendorTypeList">{{vendor.vendor_type}}</option>
+                        </select>
+                        <div class="invalid-feedback" *ngIf="form.controls['vendor_type'].hasError('required')">
+                          Please select type
+                        </div>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>PAN</label>
+                        <input type="text" class="form-control" name="pan_no" placeholder="Pan" formControlName="pan_no">
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>CIN</label>
+                        <input type="text" class="form-control" name="cin_no" placeholder="CIN" formControlName="cin_no">
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>GSTIN</label>
+                        <input type="text" class="form-control" name="gst_no" placeholder="GSTIN" formControlName="gst_no">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card bg-light mb-3">
+                  <div class="card-header">Contact Information</div>
+                  <div class="card-body">
+                    <div class="row" formArrayName="vendor_address" *ngFor="let contact of getContact(form); let i = index;">
+                      <div [formGroupName]="i" class="col-md-12">
+                        <div class="row">
+                          <div class="form-group col-md-3">
+                            <label>Email</label>
+                            <input class="form-control" placeholder="Email" name="email" formControlName="email" [ngClass]="{
+                              'is-invalid': contact.get('email').invalid && (contact.get('email').dirty || contact.get('email').touched),
+                              'is-valid': contact.get('email').valid && (contact.get('email').dirty || contact.get('email').touched)
+                            }">
+                            <div class="invalid-feedback" *ngIf="contact.get('email').touched && contact.get('email').hasError('pattern')">
+                              Please enter a valid email address
+                            </div>
+                          </div>
+                          <div class="form-group col-md-3">
+                            <label>Contact No.</label>
+                            <input appOnlyNumber class="form-control" placeholder="Contact No." name="mobile" formControlName="mobile" [ngClass]="{
+                            'is-invalid': contact.get('mobile').invalid && (contact.get('mobile').dirty || contact.get('mobile').touched),
+                            'is-valid': contact.get('mobile').valid && (contact.get('mobile').dirty || contact.get('mobile').touched)
+                          }">
+                            <div class="invalid-feedback" *ngIf="contact.get('mobile').touched && contact.get('mobile').hasError('minlength') && !contact.get('mobile').hasError('required')">
+                              Please enter at least 10 digit
+                            </div>
+                            <div class="invalid-feedback" *ngIf="contact.get('mobile').touched && contact.get('mobile').hasError('maxlength') && !contact.get('mobile').hasError('required')">
+                              Phone number should be less then 13 digit
+                            </div>
+                            <div class="invalid-feedback" *ngIf="contact.get('mobile').touched && contact.get('mobile').hasError('required')">
+                              Please enter phone
+                            </div>
+                          </div>
+                          <div class="form-group col-md-3">
+                            <label>Contact Person</label>
+                            <input class="form-control" placeholder="Contact Person" name="contact_person" formControlName="contact_person" [ngClass]="{
+                            'is-invalid': contact.get('contact_person').invalid && (contact.get('contact_person').dirty || contact.get('contact_person').touched),
+                            'is-valid': contact.get('contact_person').valid && (contact.get('contact_person').dirty || contact.get('contact_person').touched)
+                          }">
+                            <div class="invalid-feedback" *ngIf="contact.get('contact_person').touched && contact.get('contact_person').hasError('required')">
+                              Please enter Contact Person
+                            </div>
+                          </div>
+                          <div class="form-group col-md-3">
+                            <label>Designation</label>
+                            <input class="form-control" placeholder="Designation" name="designation" formControlName="designation">
+                          </div>
+                          <div class="form-group col-md-5">
+                            <label>Address</label>
+                            <textarea class="form-control" rows="1" placeholder="Address" name="address" formControlName="address" [ngClass]="{
+                            'is-invalid': contact.get('address').invalid && (contact.get('address').dirty || contact.get('address').touched),
+                            'is-valid': contact.get('address').valid && (contact.get('address').dirty || contact.get('address').touched)
+                          }"></textarea>
+                            <div class="invalid-feedback" *ngIf="contact.get('address').touched && contact.get('address').hasError('required')">
+                              Please enter address
+                            </div>
+                          </div>
+                          <div class="form-group col-md-2">
+                            <label>State</label>
+                            <select class="form-control" name="state" formControlName="state" [ngClass]="{
+                            'is-invalid': contact.get('state').invalid && (contact.get('state').dirty || contact.get('state').touched),
+                            'is-valid': contact.get('state').valid && (contact.get('state').dirty || contact.get('state').touched)
+                          }">
+                              <option value="">Select State</option>
+                              <option value="{{state.id}}" *ngFor="let state of stateList">{{state.state_name}}</option>
+                            </select>
+                            <div class="invalid-feedback" *ngIf="contact.get('state').touched && contact.get('state').hasError('required')">
+                              Please select state
+                            </div>
+                          </div>
+                          <div class="form-group col-md-2">
+                            <label>City</label>
+                            <input class="form-control" placeholder="City" name="city" formControlName="city" [ngClass]="{
+                            'is-invalid': contact.get('city').invalid && (contact.get('city').dirty || contact.get('city').touched),
+                            'is-valid': contact.get('city').valid && (contact.get('city').dirty || contact.get('city').touched)
+                          }">
+                            <div class="invalid-feedback" *ngIf="contact.get('city').touched && contact.get('city').hasError('required')">
+                              Please enter city
+                            </div>
+                          </div>
+                          <div class="form-group col-md-2">
+                            <label>Pin</label>
+                            <input class="form-control" placeholder="Pin" name="pincode" formControlName="pincode" [ngClass]="{
+                            'is-invalid': contact.get('pincode').invalid && (contact.get('pincode').dirty || contact.get('pincode').touched),
+                            'is-valid': contact.get('pincode').valid && (contact.get('pincode').dirty || contact.get('pincode').touched)
+                          }">
+                            <div class="invalid-feedback" *ngIf="contact.get('pincode').touched && contact.get('pincode').hasError('required')">
+                              Please enter pincode
+                            </div>
+                          </div>
+                          <div class="form-group col-md-1" style="padding-top:30px;">
+                            <a routerLink="." (click)="addContact()" title="Add More" name="Add More" *ngIf="i == 0">
+                              <i class="fa fa-plus"></i> Add More</a>
+                            <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="i > 0" (click)="deleteContact(i)">
+                              <i class="fa fa-times-circle fa-2"></i> Delete</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card bg-light mb-3">
+                  <div class="card-header">Banking Information</div>
+                  <div class="card-body">
+                    <div class="row" formArrayName="vendor_account" *ngFor="let bank of getBank(form); let i = index;">
+                      <div [formGroupName]="i" class="col-md-12">
+                        <div class="row">
+                          <div class="form-group col-md-3">
+                            <label>Bank Name</label>
+                            <input class="form-control" placeholder="Bank Name" name="bank_name" formControlName="bank_name" [ngClass]="{
+                            'is-invalid': bank.get('bank_name').invalid && (bank.get('bank_name').dirty || bank.get('bank_name').touched),
+                            'is-valid': bank.get('bank_name').valid && (bank.get('bank_name').dirty || bank.get('bank_name').touched)
+                          }">
+                            <div class="invalid-feedback" *ngIf="bank.get('bank_name').touched && bank.get('bank_name').hasError('required')">
+                              Please enter Bank Name
+                            </div>
+                          </div>
+                          <div class="form-group col-md-3">
+                            <label>Branch</label>
+                            <input class="form-control" placeholder="Branch" name="branch_name" formControlName="branch_name" [ngClass]="{
+                            'is-invalid': bank.get('branch_name').invalid && (bank.get('branch_name').dirty || bank.get('branch_name').touched),
+                            'is-valid': bank.get('branch_name').valid && (bank.get('branch_name').dirty || bank.get('branch_name').touched)
+                          }">
+                            <div class="invalid-feedback" *ngIf="bank.get('branch_name').touched && bank.get('branch_name').hasError('required')">
+                              Please enter branch name
+                            </div>
+                          </div>
+                          <div class="form-group col-md-3">
+                            <label>A/c No</label>
+                            <input appOnlyNumber class="form-control" placeholder="A/c No" name="account_no" formControlName="account_no" [ngClass]="{
+                            'is-invalid': bank.get('account_no').invalid && (bank.get('account_no').dirty || bank.get('account_no').touched),
+                            'is-valid': bank.get('account_no').valid && (bank.get('account_no').dirty || bank.get('account_no').touched)
+                          }">
+                            <div class="invalid-feedback" *ngIf="bank.get('account_no').touched && bank.get('account_no').hasError('required')">
+                              Please enter A/c No
+                            </div>
+                          </div>
+                          <div class="form-group col-md-2">
+                            <label>IFSC</label>
+                            <input class="form-control" placeholder="IFSC" name="ifsc_code" formControlName="ifsc_code" [ngClass]="{
+                            'is-invalid': bank.get('ifsc_code').invalid && (bank.get('ifsc_code').dirty || bank.get('ifsc_code').touched),
+                            'is-valid': bank.get('ifsc_code').valid && (bank.get('ifsc_code').dirty || bank.get('ifsc_code').touched)
+                          }">
+                            <div class="invalid-feedback" *ngIf="bank.get('ifsc_code').touched && bank.get('ifsc_code').hasError('required')">
+                              Please enter IFSC
+                            </div>
+                          </div>
+                          <div class="form-group col-md-1" style="padding-top:30px;">
+                            <a routerLink="." (click)="addBank()" title="Add More" name="Add More" *ngIf="i == 0">
+                              <i class="fa fa-plus"></i> Add More</a>
+                            <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="i > 0" (click)="deleteBank(i)">
+                              <i class="fa fa-times-circle fa-2"></i> Delete</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-12" style="text-align: right">
+                    <button type="submit" class="btn btn-primary" (click)="addVendor()">Submit</button>
+                    <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</loading>

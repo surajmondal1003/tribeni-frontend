@@ -1,0 +1,264 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">Payment Report</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+    <div>
+      <div class="row">
+        <div class="col-md-12">
+          <form role="form">
+            <div class="card bg-light mb-3">
+              <div class="card-header" style="background-color:#868e96; color: #fff;">Payment Report</div>
+              <div class="card-body">
+                <div class="card bg-light mb-3">
+                  <div class="card-header">Search Criteria</div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="form-group col-md-3">
+                        <label>Payment no.</label>
+                        <ng-select class="form-control" placeholder="Select Payment" (change)="paymentChange($event)" [clearable]="false" name="payment">
+                          <ng-option [value]="''">Select Payment</ng-option>
+                          <ng-option *ngFor="let payment of payment_list" [value]="payment.id">{{payment.payment_no}}</ng-option>
+                        </ng-select>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>From Date</label>
+                        <div class="input-group">
+                          <input class="form-control" placeholder="yyyy-mm-dd" name="from_date" ngbDatepicker #f="ngbDatepicker" [(ngModel)]="from_date">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="f.toggle()" type="button">
+                              <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>To Date</label>
+                        <div class="input-group">
+                          <input class="form-control" placeholder="yyyy-mm-dd" name="to_date" ngbDatepicker #t="ngbDatepicker" [(ngModel)]="to_date">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="t.toggle()" type="button">
+                              <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>By Company</label>
+                        <ng-select class="form-control" placeholder="Select Company" [clearable]="false" name="company" [(ngModel)]="company">
+                          <ng-option [value]="''">Select Company</ng-option>
+                          <ng-option *ngFor="let company of company_list" [value]="company.id">{{company.company_name}}</ng-option>
+                        </ng-select>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>By Project</label>
+                        <ng-select class="form-control" placeholder="Select Project" [clearable]="false" name="project" [(ngModel)]="project">
+                          <ng-option [value]="''">Select Project</ng-option>
+                          <ng-option *ngFor="let project of project_list" [value]="project.id">{{project.project_name}}</ng-option>
+                        </ng-select>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>By Vendor</label>
+                        <ng-select class="form-control" placeholder="Select Vendor" [clearable]="false" name="vendor" [(ngModel)]="vendor">
+                          <ng-option [value]="''">Select Vendor</ng-option>
+                          <ng-option *ngFor="let vendor of vendor_list" [value]="vendor.id">{{vendor.vendor_fullname}}</ng-option>
+                        </ng-select>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>By Payment Status</label>
+                        <select class="form-control" name="paid" [(ngModel)]="paid">
+                          <option value="">Select Payment Status</option>
+                          <option value="1">Paid</option>
+                          <option value="0">Pending</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>&nbsp;&nbsp;&nbsp;</label>
+                        <div class="clearfix"></div>
+                        <button type="submit" class="btn btn-primary" (click)="search()" [disabled]="payment_details_key">Search</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card bg-light mb-3" *ngIf="Search_payment_list_key">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-md-9">
+                        <h5>Results</h5>
+                      </div>
+                      <div class="col-md-3 text-right">
+                        <!-- <button type="submit" class="btn btn-default">Excel</button> -->
+                        <!-- <button type="submit" class="btn btn-default">PDF</button> -->
+                        <!-- <button type="submit" class="btn btn-default">Print</button> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <table class="card-body table table-hover table-sm table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Sl.No.</th>
+                            <th>Company</th>
+                            <th>Payment No</th>
+                            <th>PO INV No
+                              <span class="info" ngbTooltip="Purchase Order Invoice Number">i</span>
+                            </th>
+                            <th>PO No
+                              <span class="info" ngbTooltip="Purchase Order Number">i</span>
+                            </th>
+                            <th>Party Name</th>
+                            <th>Created At</th>
+                            <th>Created By</th>
+                            <th>Amount</th>
+                            <th>Payment Mode</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let report of SearchPaymentList ; let i = index">
+                            <th scope="row">{{itemNo + i +1}}</th>
+                            <td>{{report.company.company_name}}</td>
+                            <td>{{report.payment_no}}</td>
+                            <td>{{report.pur_inv_no.inv_no}}</td>
+                            <td>{{report.po_order_no}}</td>
+                            <td>{{report.company.company_name}}</td>
+                            <td>{{report.created_at | date: 'dd-MM-yyyy'}}</td>
+                            <td>{{report.created_by.first_name}}</td>
+                            <td>{{report.total_amount}}</td>
+                            <td>
+                              <label *ngIf="report.is_paid">Paid</label>
+                              <label *ngIf="!report.is_paid">Pending</label>
+                            </td>
+                          </tr>
+                          <tr *ngIf="SearchPaymentList.length == 0">
+                            <td colspan="10" class="text-center">No record found</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="col-md-12" *ngIf="totalSearchPaymentList > 0">
+                        <div class="pagination-msg">
+                          <p>Showing {{lower_count}} to {{upper_count}} of {{totalSearchPaymentList}} entries</p>
+                        </div>
+                      </div>
+                      <div class="col-md-12" *ngIf="totalSearchPaymentList > itemPerPage">
+                        <div class="pull-right">
+                          <ngb-pagination [collectionSize]="totalSearchPaymentList" [maxSize]="paginationMaxSize" [(page)]="defaultPagination" (pageChange)="pagination()"
+                            size="sm"></ngb-pagination>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card bg-light mb-3" *ngIf="payment_details_key">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-md-9">
+                        <h5>Payment Number : {{paymentDetails.payment_no}}</h5>
+                      </div>
+                      <div class="col-md-3 text-right">
+                        <!-- <button type="submit" class="btn btn-default">Excel</button> -->
+                        <!-- <button type="submit" class="btn btn-default">PDF</button> -->
+                        <!-- <button type="submit" class="btn btn-default">Print</button> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <table class="card-body table table-sm table-bordered">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <label>Payment Number : </label>
+                              </td>
+                              <td>
+                                <label>{{paymentDetails.payment_no}}</label>
+                              </td>
+                              <td>
+                                <label>Company : </label>
+                              </td>
+                              <td>
+                                <label>{{paymentDetails.company.company_name}}</label>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <label>Purchase Invoice Number : </label>
+                              </td>
+                              <td>
+                                <label>{{paymentDetails.pur_inv_no.inv_no}}</label>
+                              </td>
+                              <td>
+                                <label>Purchase Invoice Date : </label>
+                              </td>
+                              <td>
+                                <label>{{paymentDetails.pur_inv_no.date | date:'dd-MM-yyyy'}}</label>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <label>PO Number : </label>
+                              </td>
+                              <td>
+                                <label>{{paymentDetails.po_order_no}}</label>
+                              </td>
+                              <td>
+                                <label>Vendor Name : </label>
+                              </td>
+                              <td>
+                                <label>{{paymentDetails.vendor_name}}</label>
+                              </td>
+                            </tr>
+                            <tr>
+
+                              <td>
+                                <label>Payment Mode : </label>
+                              </td>
+                              <td>
+                                <label>{{paymentDetails.payment_mode}}</label>
+                              </td>
+                              <td>
+                                <label>Payment Refrence : </label>
+                              </td>
+                              <td>
+                                <label>{{paymentDetails.payment_refrence}}</label>
+                              </td>
+                            </tr>
+                            <tr>
+
+                              <td>
+                                <label>Indent Raised By :</label>
+                              </td>
+                              <td>
+                                <label>{{paymentDetails.created_by.first_name}}</label>
+                              </td>
+                              <td>
+                                <label>Special Note :</label>
+                              </td>
+                              <td colspan="3">
+                                <label>{{paymentDetails.special_note}}</label>
+                              </td>
+                            </tr>
+
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</loading>

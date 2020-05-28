@@ -1,0 +1,39 @@
+<loading [state]="loading">
+    <div class="row">
+        <div class="col-md-6">
+            <h4 class="page-header">Company Hierarchy</h4>
+        </div>
+        <div class="col-md-6 pull-right" style="text-align: right">
+            <app-help [heading]="help_heading" [description]="help_description"></app-help>
+            <button type="button" class="btn btn-primary" (click)="btnClickNav('company/add')">
+                <i class="fa fa-plus"></i> New Company</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <hr/>
+    <div style="text-align: center">
+        <div class="tree">
+            <ul>
+                <li *ngFor="let company of companyList">
+                    <a href="javascript:void(0);" [routerLink]="['/company/details', company.id]">{{company.company_name}}</a>
+                    <ul *ngIf="company.children.length>0">
+                        <li *ngFor="let subCompany of company.children">
+                            <a href="javascript:void(0);" [routerLink]="['/company/details', subCompany.id]">{{subCompany.company_name}}</a>
+                            <ul *ngIf="subCompany.children.length>0">
+                                <li *ngFor="let subSubCompany of subCompany.children">
+                                    <a href="javascript:void(0);" [routerLink]="['/company/details', subSubCompany.id]">{{subSubCompany.company_name}}</a>
+                                    <ul *ngIf="subSubCompany.children.length>0">
+                                        <li *ngFor="let subSubSubCompany of subSubCompany.children">
+                                            <a href="javascript:void(0);" [routerLink]="['/company/details', subSubSubCompany.id]">{{subSubSubCompany.company_name}}</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</loading>

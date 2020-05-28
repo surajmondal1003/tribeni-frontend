@@ -1,0 +1,92 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">Vendor Type List</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+        <button type="button" class="btn btn-primary" (click)="btnClickNav('vendor-type/add')">
+          <i class="fa fa-plus"></i> New Vendor Type</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-9">
+                <h5>Vendors Type</h5>
+              </div>
+              <div class="col-md-3">
+                <form role="form" (ngSubmit)="dataSearch()">
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="search" placeholder="Search" [(ngModel)]="search_key">
+                    <div class="input-group-append">
+                      <button class="btn btn-secondary" type="submit">
+                        <i class="fa fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <table class="card-body table table-hover table-sm table-bordered">
+            <thead>
+              <tr>
+                <th>Sl.No.</th>
+                <th *ngFor="let headerTh of headerThOption ; let i = index" (click)="sortTable(headerTh.code)" class="custom-table-head">{{headerTh.name}}
+                  <span class="pull-right">
+                    <i class="fa fa-chevron-up inactive-color" [ngClass]="{'active-color':headerTh.sort_type=='asc'}"></i>
+                    <i class="fa fa-chevron-down inactive-color" [ngClass]="{'active-color':headerTh.sort_type=='desc'}"></i>
+                  </span>
+                </th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let vendorType of vendorTypeList ; let i = index">
+                <th scope="row">{{itemNo + i +1}}</th>
+                <td>{{vendorType.vendor_type}}</td>
+                <td>{{vendorType.created_at | date:'dd-MM-yyyy'}}</td>
+                <td>
+                  <a href="javascript:void(0);" title="Active" name="Active" (click)="inactiveVendorType(vendorType.id)" *ngIf="vendorType.status==true">
+                    <i class="fa fa-thumbs-up"></i> Active</a>
+                  <a href="javascript:void(0);" title="Inactive" name="Inactive" (click)="activeVendorType(vendorType.id)" *ngIf="vendorType.status==false">
+                    <i class="fa fa-thumbs-down"></i> Inactive</a>
+                </td>
+                <td>
+                  <a href="javascript:void(0);" title="Edit" name="Edit" [routerLink]="['/vendor-type/edit', vendorType.id]">
+                    <i class="fa fa-edit"></i>
+                  </a>&nbsp;&nbsp;&nbsp;
+                  <a href="javascript:void(0);" title="Map" name="Map" (click)="deleteVendorType(vendorType.id)">
+                    <i class="fa fa-trash-o"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr *ngIf="vendorTypeList.length == 0">
+                <td colspan="6" class="text-center">No record found</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-md-12">
+            <div class="pagination-msg" *ngIf="totalVendorTypeList > 0">
+              <p>Showing {{lower_count}} to {{upper_count}} of {{totalVendorTypeList}} entries</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card-body pull-right" *ngIf="totalVendorTypeList > itemPerPage">
+          <ngb-pagination [collectionSize]="totalVendorTypeList" [maxSize]="paginationMaxSize" [(page)]="defaultPagination" (pageChange)="pagination()"
+            size="sm"></ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</loading>

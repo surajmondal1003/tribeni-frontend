@@ -1,0 +1,50 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">Material Group Add</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+        <button type="button" class="btn btn-primary" (click)="btnClickNav('material-group')">
+          <i class="fa fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+    <div>
+      <div class="row">
+        <div class="col-md-12">
+          <form role="form" [formGroup]="form">
+            <div class="card bg-light mb-3">
+              <div class="card-header" style="background-color:#868e96; color: #fff;">Material Group Add</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label>Material Group Name</label>
+                    <input class="form-control" placeholder="Material Group Name" name="material_type" formControlName="material_type" [ngClass]="displayFieldCss('material_type')">
+                    <div class="invalid-feedback" *ngIf="isFieldValid('material_type')">
+                      Please enter Material Group name
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>Group Description</label>
+                    <textarea class="form-control" rows="1" placeholder="Group Description" name="description" formControlName="description"
+                      [ngClass]="displayFieldCss('description')"></textarea>
+                    <div class="invalid-feedback" *ngIf="isFieldValid('description')">
+                      Please enter Group Description
+                    </div>
+                  </div>
+                  <div class="form-group col-md-12" style="text-align: right">
+                    <button type="submit" class="btn btn-primary" (click)="addNewMaterialGroup()">Submit</button>
+                    <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</loading>

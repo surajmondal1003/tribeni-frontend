@@ -1,0 +1,42 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">Unit of Measurement Add</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+        <button type="button" class="btn btn-primary" (click)="btnClickNav('uom')">
+          <i class="fa fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+    <div>
+      <div class="row">
+        <div class="col-md-12">
+          <form role="form" [formGroup]="form" novalidate>
+            <div class="card bg-light mb-3">
+              <div class="card-header" style="background-color:#868e96; color: #fff;">Unit of Measurement Add</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label>Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="uom.name" name="name" placeholder="Name" formControlName="name" [ngClass]="displayFieldCss('name')">
+                    <div class="invalid-feedback" *ngIf="form.controls['name'].hasError('required')">
+                      Please enter name
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6" style="text-align: left; padding-top: 26px;">
+                    <button type="submit" class="btn btn-primary" (click)="updateUom()">Submit</button>
+                    <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</loading>

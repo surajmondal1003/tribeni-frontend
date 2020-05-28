@@ -1,0 +1,6 @@
+<div [ngClass]="{ loading: state !== LoadingStateType.Ready }">
+  <div *ngIf="state !== LoadingStateType.Ready" class="loading-spinner"></div>
+  <div *ngIf="state !== LoadingStateType.NotReady" [ngClass]="{ hidden: state === LoadingStateType.NotReady }">
+    <ng-content></ng-content>
+  </div>
+</div>

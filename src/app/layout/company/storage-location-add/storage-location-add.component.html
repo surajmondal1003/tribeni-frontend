@@ -1,0 +1,95 @@
+<loading [state]="loading">
+    <div>
+        <div style="padding-top: 20px;">
+            <div class="col-md-6 offset-md-6 pull-right" style="text-align: right">
+                <app-help [heading]="help_heading" [description]="help_description"></app-help>
+                <button type="button" class="btn btn-primary" (click)="btnClickNav()">
+                    <i class="fa fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <hr/>
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form role="form" [formGroup]="form">
+                        <div class="card bg-light mb-3">
+                            <div class="card-header" style="background-color:#868e96; color: #fff;">Company Storage Location Add</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-4">
+                                        <label>Branch</label>
+                                        <select class="form-control" [(ngModel)]="companyStorage.branch" name="storage_branch" formControlName="branch" [ngClass]="displayFieldCss('branch')">
+                                            <option value="">Select Branch</option>
+                                            <option *ngFor="let companyBranch of companyBranchList;" value="{{companyBranch.id}}">{{companyBranch.branch_name}}</option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('branch')">
+                                            Please select branch
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label>Email</label>
+                                        <input type="email" class="form-control" [(ngModel)]="companyStorage.storage_email" name="storage_email" placeholder="Email"
+                                            formControlName="storage_email" [ngClass]="displayFieldCss('storage_email')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('storage_email')">
+                                            Please enter email
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Phone</label>
+                                        <input type="text" appOnlyNumber class="form-control" [(ngModel)]="companyStorage.storage_contact_no" name="storage_contact_no"
+                                            placeholder="Phone" formControlName="storage_contact_no" [ngClass]="displayFieldCss('storage_contact_no')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('storage_contact_no')">
+                                            Please enter phone
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>Store Address</label>
+                                        <textarea class="form-control" [(ngModel)]="companyStorage.storage_address" name="storage_address" rows="3" placeholder="Store Address"
+                                            formControlName="storage_address" [ngClass]="displayFieldCss('storage_address')">{{companyStorage.branch_address}}</textarea>
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('storage_address')">
+                                            Please enter store address
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>State</label>
+                                        <select class="form-control" [(ngModel)]="companyStorage.storage_state" name="storage_state" formControlName="storage_state"
+                                            [ngClass]="displayFieldCss('storage_state')">
+                                            <option value="">Select State</option>
+                                            <option *ngFor="let state of stateList;" value="{{state.id}}">{{state.state_name}}</option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('storage_state')">
+                                            Please select state
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>City</label>
+                                        <input type="text" class="form-control" placeholder="City Name" [(ngModel)]="companyStorage.storage_city" name="storage_city"
+                                            formControlName="storage_city" [ngClass]="displayFieldCss('storage_city')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('storage_city')">
+                                            Please enter city
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Pin</label>
+                                        <input type="text" class="form-control" placeholder="Pin" [(ngModel)]="companyStorage.storage_pincode" name="storage_pincode"
+                                            formControlName="storage_pincode" [ngClass]="displayFieldCss('storage_pincode')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('storage_pincode')">
+                                            Please enter city
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12" style="text-align: right">
+                                        <button type="submit" class="btn btn-primary" (click)="addNewCompanyStorage()">Submit</button>
+                                        <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</loading>

@@ -1,0 +1,179 @@
+<loading [state]="loading">
+    <div>
+        <div style="padding-top: 20px;">
+            <div class="col-md-6 offset-md-6 pull-right" style="text-align: right">
+                <app-help [heading]="help_heading" [description]="help_description"></app-help>
+                <button type="button" class="btn btn-primary" (click)="btnClickNav()">
+                    <i class="fa fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <hr/>
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form role="form" [formGroup]="form" novalidate>
+                        <div class="card bg-light mb-3">
+                            <div class="card-header" style="background-color:#868e96; color: #fff;">Company Project Add</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-4">
+                                        <label>Project Name</label>
+                                        <input type="text" class="form-control" [(ngModel)]="companyProject.project_name" name="project_name" placeholder="Project Name"
+                                            formControlName="project_name" [ngClass]="displayFieldCss('project_name')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('project_name')">
+                                            Please enter project name
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Description</label>
+                                        <input type="text" class="form-control" [(ngModel)]="companyProject.description" name="description" placeholder="Description"
+                                            formControlName="description">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Contact Person</label>
+                                        <input type="text" class="form-control" [(ngModel)]="companyProject.contact_person" name="contact_person" placeholder="Contact Person"
+                                            formControlName="contact_person">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Phone</label>
+                                        <input type="text" appOnlyNumber class="form-control" [(ngModel)]="companyProject.project_contact_no" name="project_contact_no"
+                                            placeholder="Phone" formControlName="project_contact_no">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Project Address</label>
+                                        <input type="text" class="form-control" [(ngModel)]="companyProject.project_address" name="project_address" placeholder="Project Address"
+                                            formControlName="project_address">
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label>State</label>
+                                        <select class="form-control" [(ngModel)]="companyProject.project_state" name="project_state" formControlName="project_state">
+                                            <option value="">Select State</option>
+                                            <option *ngFor="let state of stateList;" value="{{state.id}}">{{state.state_name}}</option>
+                                        </select>
+
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>City</label>
+                                        <input type="text" class="form-control" placeholder="City Name" [(ngModel)]="companyProject.project_city" name="project_city"
+                                            formControlName="project_city">
+
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Pin</label>
+                                        <input type="text" appOnlyNumber class="form-control" placeholder="Pin" [(ngModel)]="companyProject.project_pincode" name="project_pincode"
+                                            formControlName="project_pincode">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('project_pincode')">
+                                            Please enter pin
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>GSTIN</label>
+                                        <input type="text" class="form-control" placeholder="GSTIN" [(ngModel)]="companyProject.project_gstin" name="project_gstin"  formControlName="project_gstin">
+
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <div class="card bg-light mb-3">
+                                            <div class="card-header">Material Line</div>
+                                            <div class="card-body">
+                                                <div class="row" formArrayName="project_details" *ngFor="let projectObj of getProjectDetail(form); let i = index;">
+                                                    <div [formGroupName]="i" class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="form-group col-md-3">
+                                                                <label>Material Group</label>
+                                                                <select class="form-control" name="materialtype" formControlName="materialtype" [ngClass]="{
+                                                        'is-invalid': projectObj.get('materialtype').invalid && (projectObj.get('materialtype').dirty || projectObj.get('materialtype').touched),
+                                                        'is-valid': projectObj.get('materialtype').valid && (projectObj.get('materialtype').dirty || projectObj.get('materialtype').touched)
+                                                      }" (change)="changeMaterialType($event.target.value,i)" [(ngModel)]="companyProject.project_details[i].materialtype">
+                                                                    <option value="">Select Material Type</option>
+                                                                    <option *ngFor="let material_type of materialTypeList;" [value]="material_type.id">{{material_type.material_type}} </option>
+                                                                </select>
+                                                                <div class="invalid-feedback" *ngIf="projectObj.get('materialtype').touched && projectObj.get('materialtype').hasError('required')">
+                                                                    Please select material Group
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group col-md-2">
+                                                                <label>Material</label>
+                                                                <select class="form-control" name="material" formControlName="material" [ngClass]="{
+                                                            'is-invalid': projectObj.get('material').invalid && (projectObj.get('material').dirty || projectObj.get('material').touched),
+                                                            'is-valid': projectObj.get('material').valid && (projectObj.get('material').dirty || projectObj.get('material').touched)
+                                                          }" (change)="changeMaterial($event.target.value,i)" [(ngModel)]="companyProject.project_details[i].material">
+                                                                    <option value="">Select Material</option>
+                                                                    <option *ngFor="let mat of dynamicMaterialList[i];" [value]="mat.id">{{mat.material_fullname}}</option>
+                                                                </select>
+                                                                <div class="invalid-feedback" *ngIf="projectObj.get('material').touched && projectObj.get('material').hasError('required')">
+                                                                    Please select material
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group col-md-2">
+                                                                <label>Quantity</label>
+                                                                <input appOnlyNumber class="form-control" placeholder="Quantity" name="quantity" formControlName="quantity" [ngClass]="{
+                                                        'is-invalid': projectObj.get('quantity').invalid && (projectObj.get('quantity').dirty || projectObj.get('quantity').touched),
+                                                        'is-valid': projectObj.get('quantity').valid && (projectObj.get('quantity').dirty || projectObj.get('quantity').touched)
+                                                      }" [(ngModel)]="companyProject.project_details[i].quantity">
+                                                                <div class="invalid-feedback" *ngIf="projectObj.get('quantity').touched && projectObj.get('quantity').hasError('required')">
+                                                                    Please enter quantity
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="form-group col-md-2">
+                                                                <label>UOM</label>
+                                                                <select class="form-control" name="uom" formControlName="uom" [ngClass]="{
+                                                        'is-invalid': projectObj.get('uom').invalid && (projectObj.get('uom').dirty || projectObj.get('uom').touched),
+                                                        'is-valid': projectObj.get('uom').valid && (projectObj.get('uom').dirty || projectObj.get('uom').touched)
+                                                      }" [(ngModel)]="uomValueList[i]['id']">
+                                                                    <option value="">Select UOM</option>
+                                                                    <option *ngFor="let uom of UOMList;" value="{{uom.id}}">{{uom.name}}</option>
+                                                                </select>
+                                                                <div class="invalid-feedback" *ngIf="projectObj.get('uom').touched && projectObj.get('uom').hasError('required')">
+                                                                    Please select UMO
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group col-md-1">
+                                                                <label>Rate</label>
+                                                                <input appOnlyNumber class="form-control" placeholder="Rate" name="rate" formControlName="rate" [ngClass]="{
+                                                        'is-invalid': projectObj.get('rate').invalid && (projectObj.get('rate').dirty || projectObj.get('rate').touched),
+                                                        'is-valid': projectObj.get('rate').valid && (projectObj.get('rate').dirty || projectObj.get('rate').touched)
+                                                      }" [(ngModel)]="companyProject.project_details[i].rate">
+                                                                <div class="invalid-feedback" *ngIf="projectObj.get('rate').touched && projectObj.get('rate').hasError('required')">
+                                                                    Please enter rate
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group col-md-1">
+                                                                <label>BOQ Ref</label>
+                                                                <input appOnlyNumber class="form-control" placeholder="BOQ Ref" name="boq_ref" formControlName="boq_ref" [ngClass]="{
+                                                        'is-invalid': projectObj.get('boq_ref').invalid && (projectObj.get('boq_ref').dirty || projectObj.get('boq_ref').touched),
+                                                        'is-valid': projectObj.get('boq_ref').valid && (projectObj.get('boq_ref').dirty || projectObj.get('boq_ref').touched)
+                                                      }" [(ngModel)]="companyProject.project_details[i].boq_ref">
+                                                                <div class="invalid-feedback" *ngIf="projectObj.get('boq_ref').touched && projectObj.get('boq_ref').hasError('required')">
+                                                                    Please enter BOQ Ref
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group col-md-1" style="padding-top:30px;">
+                                                                <a routerLink="." (click)="addProjectDetail()" title="Add More" name="Add More" *ngIf="i == 0">
+                                                                    <i class="fa fa-plus"></i> Add More</a>
+                                                                <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="i > 0" (click)="deleteProjectDetail(i)">
+                                                                    <i class="fa fa-times-circle fa-2"></i> Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12" style="text-align: right">
+                                        <button type="submit" class="btn btn-primary" (click)="addNewCompanyProject()">Submit</button>
+                                        <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</loading>

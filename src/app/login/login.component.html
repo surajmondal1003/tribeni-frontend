@@ -1,0 +1,36 @@
+<loading [state]="loading">
+    <div class="login-page">
+        <div class="row justify-content-md-center">
+            <div class="col-md-4">
+                <div class="login-form">
+                    <!-- <img src="assets/images/logo.jpg" width="150px" class="user-avatar" /> -->
+                    <img src="assets/images/logo.png" />
+                    <h1>ERP System Admin</h1>
+                    <form role="form" [formGroup]="form" novalidate (submit)="onLoggedin()">
+                        <div class="form-content">
+                            <div class="form-group">
+                                <label>User Name</label>
+                                <input type="text" name="username" class="form-control input-underline input-lg" placeholder="User Name" formControlName="username"
+                                    [ngClass]="displayFieldCss('username')">
+                                <div class="invalid-feedback text-left" *ngIf="isFieldValid('username')">
+                                    Please enter user name
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" name="password" class="form-control input-underline input-lg" placeholder="Password" formControlName="password"
+                                    [ngClass]="displayFieldCss('password')">
+                                <div class="invalid-feedback text-left" *ngIf="isFieldValid('password')">
+                                    Please enter password
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn rounded-btn"> Log in </button> &nbsp;
+                        <!-- <a class="btn rounded-btn" [routerLink]="['/signup']">Register</a> -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</loading>

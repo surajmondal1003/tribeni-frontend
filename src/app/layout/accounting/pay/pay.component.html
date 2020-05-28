@@ -1,0 +1,105 @@
+<loading [state]="loading">
+    <div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="page-header">Payment Add</h4>
+            </div>
+            <div class="col-md-6 pull-right" style="text-align: right">
+                <app-help [heading]="help_heading" [description]="help_description"></app-help>
+                <button type="button" class="btn btn-primary" (click)="btnClickNav('accounting')">
+                    <i class="fa fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <hr/>
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form role="form" [formGroup]="form">
+                        <div class="card bg-light mb-3">
+                            <div class="card-header" style="background-color:#868e96; color: #fff;">Payment Add</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-3">
+                                        <label>Company</label>
+                                        <select class="form-control" [(ngModel)]="payment.company" name="company" formControlName="company">
+                                            <option value="">Select Company</option>
+                                            <option *ngFor="let companyObj of companyList ;" value="{{companyObj.id}}">{{companyObj.company_name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Select PO INV</label>
+                                        <select class="form-control" [(ngModel)]="payment.pur_inv" name="pur_inv" formControlName="pur_inv">
+                                            <option value="null">Select PO INV</option>
+                                            <option *ngFor="let invoiceObj of invoiceList ;" value="{{invoiceObj.id}}">{{invoiceObj.purchase_inv_no}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Total Amount</label>
+                                        <input class="form-control" [(ngModel)]="payment.total_amount" name="total_amount" formControlName="total_amount" placeholder="Total Amount">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Select Bank</label>
+                                        <select class="form-control" [(ngModel)]="payment.bank" name="bank" formControlName="bank" [ngClass]="displayFieldCss('bank')">
+                                            <option value="null">Select Bank</option>
+                                            <option *ngFor="let bankObj of bankList ;" value="{{bankObj.id}}">{{bankObj.bank_name}}</option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="form.controls['bank'].hasError('required')">
+                                            Please select bank
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Party Payment Date</label>
+                                        <div class="input-group datepicker-input">
+                                            <input class="form-control" placeholder="yyyy-mm-dd" name="created_at" ngbDatepicker #d="ngbDatepicker" formControlName="created_at"
+                                                [(ngModel)]="payment.created_at" [ngClass]="displayFieldCss('created_at')">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                            <div class="invalid-feedback" *ngIf="form.controls['created_at'].hasError('required')">
+                                                Please enter payment date
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Mode of Payment</label>
+                                        <select class="form-control" [(ngModel)]="payment.payment_mode" name="payment_mode" formControlName="payment_mode" [ngClass]="displayFieldCss('payment_mode')">
+                                            <option value="null">Select Mode of Payment</option>
+                                            <option>Cheque</option>
+                                            <option>Cash</option>
+                                            <option>Online</option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="form.controls['payment_mode'].hasError('required')">
+                                            Please select mode of payment
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Payment Refrence</label>
+                                        <input class="form-control" [(ngModel)]="payment.payment_refrence" name="payment_refrence" formControlName="payment_refrence"
+                                            [ngClass]="displayFieldCss('payment_refrence')" placeholder="Payment Refrence">
+                                        <div class="invalid-feedback" *ngIf="form.controls['payment_refrence'].hasError('required')">
+                                            Please enter Payment Refrence
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>Special Note</label>
+                                        <textarea class="form-control" rows="4" placeholder="Special Note" [(ngModel)]="payment.special_note" name="special_note"
+                                            formControlName="special_note" [ngClass]="displayFieldCss('special_note')"></textarea>
+                                        <div class="invalid-feedback" *ngIf="form.controls['special_note'].hasError('required')">
+                                            Please enter Payment Refrence
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12" style="text-align: right">
+                                        <button type="submit" class="btn btn-primary" (click)="Payment()">Pay</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</loading>

@@ -1,0 +1,113 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">Stocks Issue Add</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+        <button type="button" class="btn btn-primary" (click)="btnClickNav('stocks')">
+          <i class="fa fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+    <div>
+      <div class="row">
+        <div class="col-md-12">
+          <form role="form" [formGroup]="form" novalidate>
+            <div class="card bg-light mb-3">
+              <div class="card-header" style="background-color:#868e96; color: #fff;">Stocks Issue Add</div>
+              <div class="card-body" *ngIf="visible_key">
+                <div class="card bg-light mb-3">
+                  <div class="card-header">Issue Stock</div>
+                  <div class="card-body">
+                    <table class="card-body table table-sm table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Company</th>
+                          <th>From Project</th>
+                          <th>Item</th>
+                          <th>Available Quantity</th>
+                          <th>To Project</th>
+                          <th>Transfer Type</th>
+                          <th>Contractor</th>
+                          <th *ngIf="getAvlChek(this.stockDetails.avl_qty)">Issuing Quantity</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{stockDetails.company_details.name}}</td>
+                          <td>{{stockDetails.company_project_details.project_name}}</td>
+                          <td>{{stockDetails.material_details.material_fullname}}({{stockDetails.material_details.material_code}})</td>
+                          <td>{{stockDetails.avl_qty}}</td>
+                          <td>
+                            <div class="form-group">
+                              <select class="form-control" name="to_project" formControlName="to_project" [ngClass]="displayFieldCss('to_project')" [(ngModel)]="stockDetails.company_project_details.id">
+                                <option value="">Select Project</option>
+                                <option value="{{project.id}}" *ngFor="let project of project_list">{{project.project_name}}</option>
+                              </select>
+                              <div class="invalid-feedback" *ngIf="isFieldValid('to_project')">
+                                Please select project
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="form-group">
+                              <select class="form-control" name="transfer_type" formControlName="transfer_type" [ngClass]="displayFieldCss('transfer_type')">
+                                <option value="">Select Transfer Type</option>
+                                <option value="3">Freeable</option>                                
+                                <option value="2">Chargeable</option>
+                                <option value="1">Refundable</option>
+                              </select>
+                              <div class="invalid-feedback" *ngIf="isFieldValid('transfer_type')">
+                                Please select transfer type
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="form-group">
+                              <select class="form-control" name="contractor" formControlName="contractor" [ngClass]="displayFieldCss('contractor')">
+                                <option value="">Select Contractor</option>
+                                <option value="{{contractor.id}}" *ngFor="let contractor of contractor_list">{{contractor.contractor_name}}</option>
+                              </select>
+                              <div class="invalid-feedback" *ngIf="isFieldValid('contractor')">
+                                Please select contractor
+                              </div>
+                            </div>
+                          </td>
+                          <td width="150px" *ngIf="getAvlChek(this.stockDetails.avl_qty)">
+                            <div class="form-group">
+                              <input appOnlyNumber type="text" class="form-control" name="quantity" formControlName="quantity" [ngClass]="displayFieldCss('quantity')"
+                                (keyup)="getValueCheck($event.target.value)">
+                              <div class="invalid-feedback" *ngIf="isFieldValid('quantity')">
+                                Please enter quantity
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="row" *ngIf="getAvlChek(this.stockDetails.avl_qty)">
+                  <div class="form-group col-md-12">
+                    <label>Purpose notes</label>
+                    <textarea cols="5" class="form-control" placeholder="Purpose notes" name="note" formControlName="note" [ngClass]="displayFieldCss('note')"></textarea>
+                    <div class="invalid-feedback" *ngIf="form.controls['note'].hasError('required')">
+                      Please enter note
+                    </div>
+                  </div>
+                  <div class="form-group col-md-12" style="text-align: right">
+                    <button type="submit" class="btn btn-primary" (click)="stockIssue()">Submit</button>
+                    <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</loading>

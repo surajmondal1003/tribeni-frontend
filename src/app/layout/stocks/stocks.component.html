@@ -1,0 +1,87 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">Stocks List</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-9">
+                <h5>Stocks</h5>
+              </div>
+              <div class="col-md-3">
+                <form role="form" (ngSubmit)="dataSearch()">
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="search" placeholder="Search" [(ngModel)]="search_key">
+                    <div class="input-group-append">
+                      <button class="btn btn-secondary" type="submit">
+                        <i class="fa fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <table class="card-body table table-hover table-sm table-bordered">
+            <thead>
+              <tr>
+                <th>Sl.No.</th>
+                <th *ngFor="let headerTh of headerThOption ; let i = index" (click)="sortTable(headerTh.code)" class="custom-table-head">{{headerTh.name}}
+                  <span class="pull-right">
+                    <i class="fa fa-chevron-up inactive-color" [ngClass]="{'active-color':headerTh.sort_type=='asc'}"></i>
+                    <i class="fa fa-chevron-down inactive-color" [ngClass]="{'active-color':headerTh.sort_type=='desc'}"></i>
+                  </span>
+                </th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let stock of stockList ; let i = index">
+                <th scope="row">{{itemNo + i +1}}</th>
+                <td>{{stock.company_details.name}}</td>
+                <td>{{stock.company_project_details.project_name}}</td>
+                <td>{{stock.material_type.material_type}}</td>
+                <td>{{stock.material_details.material_fullname}} ({{stock.material_details.material_code}})</td>
+                <td>{{stock.avl_qty}} ({{stock.material_uom}})</td>
+                <td>
+                  <a href="javascript:void(0);" class="anchor-action" title="Issue" name="Issue" [routerLink]="['/stocks/issue', stock.id]">
+                    <i class="fa fa-random"></i>
+                  </a>&nbsp;&nbsp;
+                  <a href="javascript:void(0);" class="anchor-action" title="Issue History" name="Issue History" [routerLink]="['/stocks/issue-history', stock.id]">
+                    <i class="fa fa-list-alt"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr *ngIf="stockList.length == 0">
+                <td colspan="9" class="text-center">No record found</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-md-12">
+            <div class="pagination-msg" *ngIf="totalStockList > 0">
+              <p>Showing {{lower_count}} to {{upper_count}} of {{totalStockList}} entries</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="totalStockList > itemPerPage">
+      <div class="col-md-12">
+        <div class="card-body pull-right">
+          <ngb-pagination [collectionSize]="totalStockList" [maxSize]="paginationMaxSize" [(page)]="defaultPagination" (pageChange)="pagination()"
+            size="sm"></ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</loading>

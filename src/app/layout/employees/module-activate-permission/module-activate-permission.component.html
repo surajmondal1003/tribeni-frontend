@@ -1,0 +1,98 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">Module Active Permission List</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+        <button type="button" class="btn btn-primary" (click)="btnClickNav('employees/module-activate-permission/add')">
+          <i class="fa fa-plus"></i> New Module Active Permission</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-9">
+                <h5>Module Active Permission</h5>
+              </div>
+              <div class="col-md-3">
+                <form role="form" (ngSubmit)="dataSearch()">
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="search" placeholder="Search" [(ngModel)]="search_key">
+                    <div class="input-group-append">
+                      <button class="btn btn-secondary" type="submit">
+                        <i class="fa fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <table class="card-body table table-hover table-sm table-bordered">
+            <thead>
+              <tr>
+                <th>Sl.No.</th>
+                <th *ngFor="let headerTh of headerThOption ; let i = index" (click)="sortTable(headerTh.code)" class="custom-table-head">{{headerTh.name}}
+                  
+                </th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let moduleActivate of moduleActivatePermissionList ; let i = index">
+                <th scope="row">{{itemNo + i +1}}</th>
+                <td>{{moduleActivate.content_details.name}}</td>
+              <td>
+                <table class="card-body table table-hover table-sm table-bordered">
+                  <th>Permission Level</th>
+                  <th>Primary Employee</th>
+                  <th>Secondary Employee</th>
+                  <tr *ngFor="let approve_details of moduleActivate.emp_approve_details ; let j = index">
+                        <td>{{approve_details.emp_level}}</td>
+                        <td>{{approve_details.primary_emp_details.name}}</td>
+                        <td>{{approve_details.secondary_emp_details.name}}</td>
+                
+                  </tr>
+                </table>
+              </td>
+                <!-- <td>{{moduleActivate.content_details.name}}</td>
+                <td>{{moduleActivate.content_details.name}}</td> -->
+                
+                <td>
+                  <a href="javascript:void(0);" class="anchor-action" title="Edit" name="Edit" [routerLink]="['/employees/module-activate-permission/edit', moduleActivate.id]">
+                    <i class="fa fa-edit"></i>
+                  </a>&nbsp;&nbsp;&nbsp;
+                  <!-- <a href="javascript:void(0);" title="Map" name="Map" (click)="deleteEmployee(employee.id)">
+                  <i class="fa fa-trash-o"></i>
+                </a> -->
+                </td>
+              </tr>
+              <tr *ngIf="moduleActivatePermissionList.length == 0">
+                <td colspan="10" class="text-center">No record found</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-md-12">
+            <div class="pagination-msg" *ngIf="totalModuleActivatePermissionList > 0">
+              <p>Showing {{lower_count}} to {{upper_count}} of {{totalModuleActivatePermissionList}} entries</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card-body pull-right" *ngIf="totalModuleActivatePermissionList > itemPerPage">
+          <ngb-pagination [collectionSize]="totalModuleActivatePermissionList" [maxSize]="paginationMaxSize" [(page)]="defaultPagination" (pageChange)="pagination()"
+            size="sm"></ngb-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</loading>

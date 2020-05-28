@@ -1,0 +1,78 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">Employee Attendance Edit</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+        <button type="button" class="btn btn-primary" (click)="btnClickNav('employees/attendance')">
+          <i class="fa fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+    <div>
+      <div class="row">
+        <div class="col-md-12">
+          <form role="form"  [formGroup]="form" novalidate>
+            <div class="card bg-light mb-3">
+              <div class="card-header" style="background-color:#868e96; color: #fff;">Employee Attendance Edit</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="form-group col-md-4">
+                    <label>Employee</label>
+                    <select class="form-control" [(ngModel)]="employee.employee" name="employee" formControlName="employee" [ngClass]="displayFieldCss('employee')">
+                      <option value="">Select Employee</option>
+                      <option *ngFor="let employee of employeeList" value="{{employee.id}}">{{employee.first_name}} {{employee.last_name}}</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="isFieldValid('employee')">
+                      Please select employee
+                    </div>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label>Date</label>
+                    <div class="input-group">
+                      <input class="form-control" [(ngModel)]="employee.date" placeholder="yyyy-mm-dd" name="date" ngbDatepicker #d="ngbDatepicker" formControlName="date"
+                        [ngClass]="displayFieldCss('date')">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                          <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                      <div class="invalid-feedback" *ngIf="isFieldValid('date')">
+                        Please enter date
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-2">
+                    <label>In Time</label>
+                    <ngb-timepicker [(ngModel)]="employee.in_time" name="in_time" [meridian]="meridian" formControlName="in_time" [ngClass]="displayFieldCss('in_time')"></ngb-timepicker>
+                    <div class="invalid-feedback" *ngIf="isFieldValid('in_time')">
+                      Please enter In Time
+                    </div>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label>Out Time</label>
+                    <ngb-timepicker [(ngModel)]="employee.out_time" name="out_time" [meridian]="meridian" formControlName="out_time" [ngClass]="displayFieldCss('out_time')"></ngb-timepicker>
+                    <div class="invalid-feedback" *ngIf="isFieldValid('out_time')">
+                      Please enter Out Time
+                    </div>
+
+                  </div>
+
+                  <div class="form-group col-md-4" style="padding-top: 57px;">
+                    <button type="submit" class="btn btn-primary" (click)="updateAttendance()">Submit</button>
+                    <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</loading>

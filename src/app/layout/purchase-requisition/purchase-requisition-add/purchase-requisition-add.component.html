@@ -1,0 +1,197 @@
+<loading [state]="loading">
+    <div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="page-header">Purchase Requisition Add</h4>
+            </div>
+            <div class="col-md-6 pull-right" style="text-align: right">
+                <app-help [heading]="help_heading" [description]="help_description"></app-help>
+                <button type="button" class="btn btn-primary" (click)="btnClickNav('purchase-requisition')">
+                    <i class="fa fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <hr/>
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form role="form" [formGroup]="form">
+                        <div class="card bg-light mb-3">
+                            <div class="card-header" style="background-color:#868e96; color: #fff;">Purchase Requisition Add</div>
+                            <div class="card-body">
+                                <div class="card bg-light mb-3">
+                                    <div class="card-header">Header Line</div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label>Company</label>
+                                                <select class="form-control" name="company" formControlName="company" [ngClass]="displayFieldCss('company')" (change)="changeCompany($event.target.value)">
+                                                    <option value="">Select Company</option>
+                                                    <option *ngFor="let company of CompanyList;" [value]="company.id">{{company.company_name}} </option>
+                                                </select>
+                                                <div class="invalid-feedback" *ngIf="isFieldValid('company')">
+                                                    Please select company
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Project</label>
+                                                <select class="form-control" name="project" formControlName="project" [ngClass]="displayFieldCss('project')" (change)="changePoject($event.target.value)">
+                                                    <option value="">Select Project</option>
+                                                    <option *ngFor="let project of projectList;" [value]="project.id">{{project.project_name}} </option>
+                                                </select>
+                                                <div class="invalid-feedback" *ngIf="isFieldValid('project')">
+                                                    Please select project
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>PR Date</label>
+                                                <div class="input-group">
+                                                    <input class="form-control" placeholder="yyyy-mm-dd" name="created_at" formControlName="created_at" [ngClass]="displayFieldCss('created_at')"
+                                                        ngbDatepicker #d="ngbDatepicker">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="invalid-feedback" *ngIf="isFieldValid('created_at')">
+                                                        Please enter date
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card bg-light mb-3" *ngIf="prevPurchaseRequisition.length > 0">
+                                    <div class="card-header">Previous Purchase Requisition</div>
+                                    <div class="card-body">
+                                        <div class="card bg-light mb-3" *ngFor="let prevReq of prevPurchaseRequisition">
+                                                <table class="card-body table table-sm " >
+                                                        <tbody>
+                                                            <tr>
+                                                                <td colspan="6">Purchase Requisition No ({{prevReq.requisition_no}})</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Material Group</td>
+                                                                <td>Material</td>
+                                                                <td>Specific Qty.</td>
+                                                                <td>Qty. Taken</td>
+                                                                <td>UOM</td>
+                                                                <td>Average Rate</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr *ngFor="let prevReqDetail of prevReq.requisition_detail">
+                                                                <td>{{prevReqDetail.material.material_type.material_type}}</td>
+                                                                <td>{{prevReqDetail.material.material_fullname}} ({{prevReqDetail.material.material_code}})</td>
+                                                                <td>{{prevReqDetail.project_material_quantity[0].quantity}}</td>
+                                                                <td>{{prevReqDetail.quantity}}</td>
+                                                                <td>{{prevReqDetail.uom.name}}</td>
+                                                                <td>{{prevReqDetail.material_rate[0].rate}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                </table>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card bg-light mb-3">
+                                    <div class="card-header">Material Line</div>
+                                    <div class="card-body">
+                                        <div class="row" formArrayName="requisition_detail" *ngFor="let requisition of getRequisitionDetail(form); let i = index;">
+                                            <div [formGroupName]="i" class="col-md-12">
+                                                <div class="row">
+                                                    <div class="form-group col-md-2">
+                                                        <label>Material Group</label>
+                                                        <select class="form-control" name="material_type" formControlName="material_type" [ngClass]="{
+                                                        'is-invalid': requisition.get('material_type').invalid && (requisition.get('material_type').dirty || requisition.get('material_type').touched),
+                                                        'is-valid': requisition.get('material_type').valid && (requisition.get('material_type').dirty || requisition.get('material_type').touched)
+                                                      }" (change)="changeMaterialType($event.target.value, i)">
+                                                            <option value="">Select Material Type</option>
+                                                            <option *ngFor="let materialType of materialTypeList;" [value]="materialType.id">{{materialType.material_type}} </option>
+                                                        </select>
+                                                        <div class="invalid-feedback" *ngIf="requisition.get('material_type').touched && requisition.get('material_type').hasError('required')">
+                                                            Please select material Group
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-2">
+                                                        <label>Material</label>
+                                                        <select class="form-control" name="material" formControlName="material" [ngClass]="{
+                                                            'is-invalid': requisition.get('material').invalid && (requisition.get('material').dirty || requisition.get('material').touched),
+                                                            'is-valid': requisition.get('material').valid && (requisition.get('material').dirty || requisition.get('material').touched)
+                                                          }" (change)="changeMaterial($event.target.value,i)" [(ngModel)]="projectSpcQuantity[i]['mat_id']">
+                                                            <option value="">Select Material</option>
+                                                            <option *ngFor="let mat of dynamicMaterialList[i];" [value]="mat.id">{{mat.material_fullname}}</option>
+                                                        </select>
+                                                        <div class="invalid-feedback" *ngIf="requisition.get('material').touched && requisition.get('material').hasError('required')">
+                                                            Please select material
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-2">
+                                                        <label>UOM</label>
+                                                        <select class="form-control" name="uom" formControlName="uom" [ngClass]="{
+                                                            'is-invalid': requisition.get('uom').invalid && (requisition.get('uom').dirty || requisition.get('uom').touched),
+                                                            'is-valid': requisition.get('uom').valid && (requisition.get('uom').dirty || requisition.get('uom').touched)
+                                                          }" [(ngModel)]="uomValueList[i]['id']">
+                                                            <option value="">Select UOM</option>
+                                                            <option *ngFor="let uom of UOMList;" value="{{uom.id}}">{{uom.name}}</option>
+                                                        </select>
+                                                        <div class="invalid-feedback" *ngIf="requisition.get('uom').touched && requisition.get('uom').hasError('required')">
+                                                            Please select UMO
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-2">
+                                                        <label>Specific Quantity</label>
+                                                        <input formControlName="spc_quantity" class="form-control" placeholder="Specific Quantity" [(ngModel)]="projectSpcQuantity[i]['spc_qtn']">
+                                                    </div>
+                                                    <div class="form-group col-md-2">
+                                                        <label>Available Quantity</label>
+                                                        <input formControlName="avl_qtn" class="form-control" placeholder="Available Quantity" [(ngModel)]="projectSpcQuantity[i]['avl_qtn']">
+                                                    </div>
+                                                    <div class="form-group col-md-1">
+                                                        <label>Quantity</label>
+                                                        <input appOnlyNumber class="form-control" placeholder="Quantity" name="quantity" formControlName="quantity" [ngClass]="{
+                                                        'is-invalid': requisition.get('quantity').invalid && (requisition.get('quantity').dirty || requisition.get('quantity').touched),
+                                                        'is-valid': requisition.get('quantity').valid && (requisition.get('quantity').dirty || requisition.get('quantity').touched)
+                                                      }" (keyup)="getExactQuantity($event.target.value, i)" [(ngModel)]="projectSpcQuantity[i]['qtn']"
+                                                            [readonly]="this.projectSpcQuantity[i]['avl_qtn'] == 0">
+                                                        <div class="invalid-feedback" *ngIf="requisition.get('quantity').touched && requisition.get('quantity').hasError('required')">
+                                                            Please enter quantity
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-1" style="padding-top:30px;">
+                                                        <a routerLink="." (click)="addRequisitionDetail()" title="Add More" name="Add More" *ngIf="i == 0">
+                                                            <i class="fa fa-plus"></i> Add More</a>
+                                                        <a href="javascript:void(0);" title="Delete" name="Delete" *ngIf="i > 0" (click)="deleteRequisitionDetail(i)">
+                                                            <i class="fa fa-times-circle fa-2"></i> Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label>Special Note</label>
+                                        <textarea class="form-control" rows="3" placeholder="Special Note" name="note" formControlName="special_note" [ngClass]="displayFieldCss('special_note')"></textarea>
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('special_note')">
+                                            Please enter special note
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12" style="text-align: right">
+                                        <button type="submit" class="btn btn-primary" (click)="addPurchaseRequisition()">Submit</button>
+                                        <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</loading>

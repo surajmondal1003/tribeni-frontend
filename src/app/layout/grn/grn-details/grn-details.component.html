@@ -1,0 +1,200 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">GRN Details</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+        <button type="button" class="btn btn-primary" (click)="btnClickNav('grn')">
+          <i class="fa fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+
+   <div *ngIf="visible_key">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card bg-light mb-3">
+            <div class="card-header" style="background-color:#868e96; color: #fff;">GRN Number : {{grnDetails.grn_no}} </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <table class="card-body table table-sm table-bordered">
+
+                    <tbody>
+                      <tr>
+                        <td>
+                          <label>GRN Number : </label>
+                        </td>
+                        <td>
+                          <label>{{grnDetails.grn_no}}</label>
+                        </td>
+                        <td>
+                          <label>PO Number : </label>
+                        </td>
+                        <td>
+                          <label>{{grnDetails.purchase_order_no}}</label>
+                        </td>
+
+                      </tr>
+                      <tr>
+                        <td>
+                          <label>Company : </label>
+                        </td>
+                        <td>
+                          <label>{{grnDetails.company.company_name}}</label>
+                        </td>
+                        <td>
+                          <label>Project : </label>
+                        </td>
+                        <td>
+                          <label>{{grnDetails.project.name}}</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label>Vendor Name : </label>
+                        </td>
+                        <td>
+                          <label>{{grnDetails.vendor.vendor_fullname}}</label>
+                        </td>
+                        <td>
+                          <label>Vendor Address : </label>
+                        </td>
+                        <td>
+                          <label>{{grnDetails.vendor_address.address}}</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label>GRN Date : </label>
+                        </td>
+                        <td>
+                          <label>{{grnDetails.created_at | date:'yyy-MM-dd'}}</label>
+                        </td>
+                        <td>
+                          <label>GRN Raised By :</label>
+                        </td>
+                        <td>
+                          <label>{{grnDetails.created_by.first_name}}</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label>Challan Date : </label>
+                        </td>
+                        <td>
+                          <label>{{grnDetails.challan_date | date:'yyy-MM-dd'}}</label>
+                        </td>
+                        <td>
+                          <label>Challan No. :</label>
+                        </td>
+                        <td >
+                          <label>{{grnDetails.challan_no}}</label>
+                        </td>
+
+                      </tr>
+                      <tr>
+                        <td>
+                          <label>Check post : </label>
+                        </td>
+                        <td>
+                          <label>{{grnDetails.check_post}}</label>
+                        </td>
+                        <td>
+                          <label>Vehicle No. :</label>
+                        </td>
+                        <td >
+                          <label>{{grnDetails.vehicle_no}}</label>
+                        </td>
+
+                      </tr>
+                      <tr>
+                        <td>
+                          <label>Waybill No. : </label>
+                        </td>
+                        <td colspan="3">
+                          <label>{{grnDetails.waybill_no}}</label>
+                        </td>
+                        
+                      </tr>
+                    </tbody>
+
+                  </table>
+                </div>
+                <div class="col-md-12">
+                  <h4>Items ordered</h4>
+                  <hr/>
+                </div>
+                <div class="col-md-12">
+                  <table class="card-body table table-hover table-sm table-bordered">
+                    <thead>
+                      <tr>
+                        <th>
+                          <label>Material Group</label>
+                        </th>
+                        <th>
+                          <label>Material</label>
+                        </th>
+                        <th>
+                          <label>Quantity</label>
+                        </th>
+                        <th>
+                          <label>UOM</label>
+                        </th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of grnDetails.grn_detail">
+                        <td>
+                          <label>{{item.material.material_type.material_type}}</label>
+                        </td>
+                        <td>
+                          <label>{{item.material.material_fullname}} ({{item.material.material_code}})</label>
+                        </td>
+                        <td>
+                          <label>{{item.receive_quantity}}</label>
+                        </td>
+                        <td>
+                          <label>{{item.material_uom}}</label>
+                        </td>
+                      </tr>
+                      
+                      
+                    </tbody>
+                  </table>
+                </div>
+                
+                
+                <div class="col-md-12">
+                  <h4>Approve Status</h4>
+                  <hr/>
+                </div>
+                <div class="col-md-4"  *ngIf="!isApproveStatus">
+                  <label *ngIf="grnDetails.is_finalised == 1" style="display: inline;">Finalised</label>
+                  <label *ngIf="grnDetails.is_approve == 1 && grnDetails.is_finalised == 0" style="display: inline;">Approved</label>
+                  <label *ngIf="grnDetails.is_approve == 2 && grnDetails.is_finalised == 0" style="display: inline;">Rejected</label>
+                  <select *ngIf="grnDetails.is_finalised == 0 && grnDetails.is_approve == 0" class="form-control" name="is_approve"
+                    (change)="changeApproveStatus($event.target.value,grnDetails.id,grnDetails.approval_level)">
+                    <option value='0'>None</option>
+                    <option value='1'>Approve</option>
+                    <option value='2'>Reject</option>
+                  </select>
+                </div>
+                <div class="col-md-4" *ngIf="isApproveStatus">
+                  <label *ngIf="grnDetails.is_finalised == 1" style="display: inline;">Finalised</label>
+                  <label *ngIf="grnDetails.is_finalised == 0" style="display: inline;">Approved</label>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</loading>

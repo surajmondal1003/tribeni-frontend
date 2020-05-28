@@ -1,0 +1,81 @@
+<div>
+  <div class="row">
+      <div class="col-md-6">
+          <h4 class="page-header">Expense Add</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+          <button type="button" class="btn btn-secondary">
+              <i class="fa fa-question" aria-hidden="true"></i> Help</button>
+          <button type="button" class="btn btn-secondary">
+              <i class="fa fa-refresh"></i> Reload</button>
+          <button type="button" class="btn btn-primary" (click)="btnClickNav('expenses')">
+              <i class="fa fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="clearfix"></div>
+  </div>
+<hr/>
+<div>
+    <div class="row">
+      <div class="col-md-12">
+          <form role="form" [formGroup]="form">
+            <div class="card bg-light mb-3">
+                <div class="card-header" style="background-color:#868e96; color: #fff;">Expense Add</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label>Company</label>
+                            <select class="form-control" name="company" 
+                              formControlName="company" [ngClass]="displayFieldCss('company')" >
+                                  <option value="">Select Company</option>
+                                  <option value="">Shyam Future</option>
+                                  <option value="">Shyam Steel</option>
+                              </select>
+                              <div class="invalid-feedback" *ngIf="form.controls['company'].hasError('required')">
+                                  Please select company 
+                              </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Employee Name</label>
+                            <select class="form-control" name="employee_name" 
+                              formControlName="employee_name" [ngClass]="displayFieldCss('employee_name')" >
+                                  <option value="">Select employee</option>
+                                  <option value="">Shashi</option>
+                                  <option value="">Suraj</option>
+                              </select>
+
+                            <div class="invalid-feedback" *ngIf="form.controls['employee_name'].hasError('required')">
+                              Please enter employee name
+                          </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label>Amount</label>
+                          <input class="form-control"  name="expense_amount" 
+                          formControlName="expense_amount" [ngClass]="displayFieldCss('expense_amount')" placeholder="Expense Amount">
+                          
+                          <div class="invalid-feedback" *ngIf="form.controls['expense_amount'].hasError('required')">
+                            Please enter expense amount
+                        </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label>Purpose</label>
+                          <input class="form-control"  name="expense_purpose" 
+                          formControlName="expense_purpose" [ngClass]="displayFieldCss('expense_purpose')" placeholder="Purpose">
+                          
+                          <div class="invalid-feedback" *ngIf="form.controls['expense_purpose'].hasError('required')">
+                            Please enter expense purpose
+                        </div>
+                        </div>
+                       
+                        <div class="form-group col-md-12" style="text-align: right">
+                            <button type="submit" class="btn btn-primary" (click)="addNewExpense()">Submit</button>
+                            <button type="reset" class="btn btn-secondary"  (click)="reSet()">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </form>
+      </div>
+    </div>
+</div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="default" color="#fff" type="ball-spin"></ngx-spinner>

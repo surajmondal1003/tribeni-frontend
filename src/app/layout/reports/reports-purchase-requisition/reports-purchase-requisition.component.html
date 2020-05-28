@@ -1,0 +1,291 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">Purchase Requisition Report</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+    <div>
+      <div class="row">
+        <div class="col-md-12">
+          <form role="form">
+            <div class="card bg-light mb-3">
+              <div class="card-header" style="background-color:#868e96; color: #fff;">Purchase Requisition Report</div>
+              <div class="card-body">
+                <div class="card bg-light mb-3">
+                  <div class="card-header">Search Criteria</div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="form-group col-md-3">
+                        <label>Purchase Requisition no.</label>
+                        <ng-select class="form-control" placeholder="Select Requisition" (change)="requisitionChange($event)" [clearable]="false"
+                          name="requisition">
+                          <ng-option [value]="''">Select Requisition</ng-option>
+                          <ng-option *ngFor="let requisition of requisition_list" [value]="requisition.id">{{requisition.requisition_no}}</ng-option>
+                        </ng-select>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>Purchase Requisition Date</label>
+                        <div class="input-group">
+                          <input class="form-control" placeholder="yyyy-mm-dd" name="requisition_date" ngbDatepicker #r="ngbDatepicker" [(ngModel)]="requisition_date">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="r.toggle()" type="button">
+                              <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>From Date</label>
+                        <div class="input-group">
+                          <input class="form-control" placeholder="yyyy-mm-dd" name="from_date" ngbDatepicker #f="ngbDatepicker" [(ngModel)]="from_date">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="f.toggle()" type="button">
+                              <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>To Date</label>
+                        <div class="input-group">
+                          <input class="form-control" placeholder="yyyy-mm-dd" name="to_date" ngbDatepicker #t="ngbDatepicker" [(ngModel)]="to_date">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="t.toggle()" type="button">
+                              <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>By Company</label>
+                        <ng-select class="form-control" placeholder="Select Company" [clearable]="false" name="company" [(ngModel)]="company">
+                          <ng-option [value]="''">Select Company</ng-option>
+                          <ng-option *ngFor="let company of company_list" [value]="company.id">{{company.company_name}}</ng-option>
+                        </ng-select>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>By Project</label>
+                        <ng-select class="form-control" placeholder="Select Project" [clearable]="false" name="project" [(ngModel)]="project">
+                          <ng-option [value]="''">Select Project</ng-option>
+                          <ng-option *ngFor="let project of project_list" [value]="project.id">{{project.project_name}}</ng-option>
+                        </ng-select>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>By Staus</label>
+                        <select class="form-control" name="status" [(ngModel)]="status">
+                          <option value="">Select Staus</option>
+                          <option value="1">Active</option>
+                          <option value="0">Inactive</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>By Approval</label>
+                        <select class="form-control" name="approve" [(ngModel)]="approve">
+                          <option value="">Select Approval</option>
+                          <option value="1">Approved</option>
+                          <option value="2">Dis-approved</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-12">
+                        <label>&nbsp;&nbsp;&nbsp;</label>
+                        <div class="clearfix"></div>
+                        <button type="submit" class="btn btn-primary pull-right" (click)="search()" [disabled]="requisition_details_key">Search</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card bg-light mb-3" *ngIf="Search_requisition_list_key">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-md-9">
+                        <h5>Results</h5>
+                      </div>
+                      <div class="col-md-3 text-right">
+                        <!-- <button type="submit" class="btn btn-default">Excel</button> -->
+                        <!-- <button type="submit" class="btn btn-default">PDF</button> -->
+                        <!-- <button type="submit" class="btn btn-default"  (click)="print()">Print</button> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row" id="purchase-requisition-report-list">
+                      <table class="card-body table table-hover table-sm table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Sl.No.</th>
+                            <th>PR No
+                              <span class="info" ngbTooltip="Purchase Requisition Number">i</span>
+                            </th>
+                            <th>Company</th>
+                            <th>Project
+                              <span class="info" ngbTooltip="Purchase Organisation">i</span>
+                            </th>
+                            <th>PR Raised Date
+                              <span class="info" ngbTooltip="Purchase Requisition Raised Date">i</span>
+                            </th>
+                            <th>PR Raised By
+                              <span class="info" ngbTooltip="Purchase Requisition Raised By">i</span>
+                            </th>
+                            <th>Status</th>
+                            <th>Is approved</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let report of SearchRequisitionList ; let i = index">
+                            <th scope="row">{{itemNo + i +1}}</th>
+                            <td>{{report.requisition_no}}</td>
+                            <td>{{report.company.company_name}}</td>
+                            <td>{{report.project.project_name}}</td>
+                            <td>{{report.created_at | date:'dd-MM-yyyy'}}</td>
+                            <td>{{report.created_by.first_name}}</td>
+                            <td>
+                              <span *ngIf="report.status">Active</span>
+                              <span *ngIf="!report.status">Inactive</span>
+                            </td>
+                            <td>
+                              <span *ngIf="report.is_approve == 1">Yes</span>
+                              <span *ngIf="report.is_approve == 0">No</span>
+                            </td>
+                          </tr>
+                          <tr *ngIf="SearchRequisitionList.length == 0">
+                            <td colspan="10" class="text-center">No record found</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="col-md-12" *ngIf="totalSearchRequisitionList > 0">
+                        <div class="pagination-msg">
+                          <p>Showing {{lower_count}} to {{upper_count}} of {{totalSearchRequisitionList}} entries</p>
+                        </div>
+                      </div>
+                      <div class="col-md-12" *ngIf="totalSearchRequisitionList > itemPerPage">
+                        <div class="pull-right">
+                          <ngb-pagination [collectionSize]="totalSearchRequisitionList" [maxSize]="paginationMaxSize" [(page)]="defaultPagination"
+                            (pageChange)="pagination()" size="sm"></ngb-pagination>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card bg-light mb-3" *ngIf="requisition_details_key">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-md-9">
+                        <h5>Purchase Requisition Number : {{requisitionDetails.requisition_no}}</h5>
+                      </div>
+                      <div class="col-md-3 text-right">
+                        <!-- <button type="submit" class="btn btn-default">Excel</button> -->
+                        <!-- <button type="submit" class="btn btn-default">PDF</button> -->
+                        <!-- <button type="submit" class="btn btn-default">Print</button> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <table class="card-body table table-hover table-sm table-bordered">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <label>Purchase Requisition Number : </label>
+                              </td>
+                              <td>
+                                <label>{{requisitionDetails.requisition_no}}</label>
+                              </td>
+                              <td>
+                                <label>Company : </label>
+                              </td>
+                              <td>
+                                <label>{{requisitionDetails.company.company_name}}</label>
+                              </td>
+                              <td>
+                                <label>Project : </label>
+                              </td>
+                              <td>
+                                <label>{{requisitionDetails.project.project_name}}</label>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td>
+                                <label>Raised By : </label>
+                              </td>
+                              <td>
+                                <label>{{requisitionDetails.created_by.first_name}}</label>
+                              </td>
+                              <td>
+                                <label>Status : </label>
+                              </td>
+                              <td>
+                                <label *ngIf="requisitionDetails.status">Active</label>
+                                <label *ngIf="!requisitionDetails.status">Inactive</label>
+                              </td>
+                              <td>
+                                <label>Raised Date :</label>
+                              </td>
+                              <td>
+                                <label>{{requisitionDetails.created_at | date: 'dd-MM-yyyy'}}</label>
+                              </td>
+                            </tr>
+
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-md-12">
+                        <h4>Items requested</h4>
+                        <hr/>
+                      </div>
+                      <div class="col-md-12">
+                        <table class="card-body table table-hover table-sm table-bordered">
+                          <thead>
+                            <tr>
+                              <th>
+                                <label>Material Group</label>
+                              </th>
+                              <th>
+                                <label>Material</label>
+                              </th>
+                              <th>
+                                <label>Quantity</label>
+                              </th>
+                              <th>
+                                <label>UOM</label>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let requisition_detail of requisitionDetails.requisition_detail ; let i = index">
+                              <td>
+                                <label>{{requisition_detail.material.material_type.material_type}}</label>
+                              </td>
+                              <td>
+                                <label>{{requisition_detail.material.material_fullname}} ( {{requisition_detail.material.material_code}}
+                                  )
+                                </label>
+                              </td>
+                              <td>
+                                <label>{{requisition_detail.uom.name}}</label>
+                              </td>
+                              <td>
+                                <label>{{requisition_detail.quantity}}</label>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</loading>

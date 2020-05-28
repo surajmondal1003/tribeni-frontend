@@ -1,0 +1,147 @@
+<loading [state]="loading">
+    <div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="page-header">Purchase Requisition Details</h4>
+            </div>
+            <div class="col-md-6 pull-right" style="text-align: right">
+                <app-help [heading]="help_heading" [description]="help_description"></app-help>
+                <button type="button" class="btn btn-primary" (click)="btnClickNav('purchase-requisition')">
+                    <i class="fa fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <hr/>
+
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card bg-light mb-3">
+                        <div class="card-header" style="background-color:#868e96; color: #fff;">Purchase Requisition Number : {{purchaseRequisition.requisition_no}}</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="card-body table table-hover table-sm table-bordered">
+
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <label>Purchase Requisition Number : </label>
+                                                </td>
+                                                <td>
+                                                    <label>{{purchaseRequisition.requisition_no}}</label>
+                                                </td>
+                                                <td>
+                                                    <label>Company : </label>
+                                                </td>
+                                                <td>
+                                                    <label>{{purchaseRequisition.company.company_name}}</label>
+                                                </td>
+                                                <td>
+                                                    <label>Project : </label>
+                                                </td>
+                                                <td>
+                                                    <label>{{purchaseRequisition.project.project_name}}</label>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label>Raised By : </label>
+                                                </td>
+                                                <td>
+                                                    <label>{{purchaseRequisition.created_by.first_name}}</label>
+                                                </td>
+                                                <td>
+                                                    <label>Status : </label>
+                                                </td>
+                                                <td>
+                                                    <label *ngIf="purchaseRequisition.status">Active</label>
+                                                    <label *ngIf="!purchaseRequisition.status">Inactive</label>
+                                                </td>
+                                                <td>
+                                                    <label>Raised Date :</label>
+                                                </td>
+                                                <td>
+                                                    <label>{{purchaseRequisition.created_at | date: 'dd-MM-yyyy'}}</label>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                                <div class="col-md-12">
+                                    <h4>Items requested</h4>
+                                    <hr/>
+                                </div>
+                                <div class="col-md-12">
+                                    <table class="card-body table table-hover table-sm table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <label>Material Group</label>
+                                                </th>
+                                                <th>
+                                                    <label>Material</label>
+                                                </th>
+                                                <th>
+                                                    <label>Quantity</label>
+                                                </th>
+                                                <th>
+                                                    <label>UOM</label>
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let requisition_detail of purchaseRequisition.requisition_detail ; let i = index">
+                                                <td>
+                                                    <label>{{requisition_detail.material.material_type.material_type}}</label>
+                                                </td>
+                                                <td>
+                                                    <label>{{requisition_detail.material.material_fullname}} ( {{requisition_detail.material.material_code}}
+                                                        )</label>
+                                                </td>
+                                                <td>
+                                                    <label>{{requisition_detail.quantity}}</label>
+                                                </td>
+                                                <td>
+                                                    <label>{{requisition_detail.uom.name}}</label>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-12">
+                                    <h4>Approve Status </h4>
+                                    <hr/>
+                                </div>
+                                <div class="col-md-4" *ngIf="!isApproveStatus">
+                                    <label *ngIf="purchaseRequisition.is_finalised == 1" style="display: inline;">Finalised</label>
+                                    <label *ngIf="purchaseRequisition.is_approve == 1 && purchaseRequisition.is_finalised == 0" style="display: inline;">Approved</label>
+                                    <label *ngIf="purchaseRequisition.is_approve == 2 && purchaseRequisition.is_finalised == 0" style="display: inline;">Rejected</label>
+                                    <select *ngIf="purchaseRequisition.is_finalised == 0 && purchaseRequisition.is_approve == 0" class="form-control" name="is_approve" (change)="changeApproveStatus($event.target.value,purchaseRequisition.id,purchaseRequisition.approval_level)"
+                                      style="display: inline-flex; width: 81%; float: right; ">
+                                      <option value='0'>None</option>
+                                      <option value='1'>Approve</option>
+                                      <option value='2'>Reject</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4" *ngIf="isApproveStatus">
+                                    <label *ngIf="purchaseRequisition.is_finalised == 1" style="display: inline;">Finalised</label>
+                                    <label *ngIf="purchaseRequisition.is_finalised == 0" style="display: inline;">Approved</label>
+                                    
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</loading>

@@ -1,0 +1,106 @@
+$topnav-background-color: #222;
+:host {
+   display: block;
+}
+
+.login-page {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   overflow: auto;
+   background: $topnav-background-color;
+   text-align: center;
+   color: #fff;
+   padding: 3em;
+   .col-lg-4 {
+       padding: 0;
+   }
+   .input-lg {
+       height: 46px;
+       padding: 10px 16px;
+       font-size: 18px;
+       line-height: 1.3333333;
+       border-radius: 0;
+   }
+   .input-underline {
+       background: #fff;
+       border: none;
+       box-shadow: none;
+       border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+       color: #1976d2;
+       border-radius: 0;
+       -webkit-box-shadow: 4px 9px 64px -6px rgba(0, 0, 0, 0.63);
+       -moz-box-shadow: 4px 9px 64px -6px rgba(0, 0, 0, 0.63);
+       box-shadow: 4px 9px 64px -6px rgba(0, 0, 0, 0.63);
+   }
+   .login-form label {
+       display: -webkit-box;
+       font-size: 15px;
+   }
+   input[placeholder],
+   [placeholder],
+   *[placeholder] {
+       color: #cccccc !important !important;
+   }
+   .form-content ::placeholder {
+       color: #cccccc !important;
+       /* Firefox */
+   }
+   .form-content ::-ms-input-placeholder {
+       /* Internet Explorer 10-11 */
+       color: #cccccc !important;
+   }
+   .form-content ::-ms-input-placeholder {
+       /* Microsoft Edge */
+       color: #cccccc !important;
+   }
+   .input-underline .form-group {
+       margin-bottom: 0 !important;
+   }
+   .input-underline ::placeholder {
+       color: #cccccc !important;
+       opacity: 1;
+   }
+   .input-underline:focus {
+       border-bottom: 2px solid #fff;
+       box-shadow: none;
+   }
+   .rounded-btn {
+       -webkit-border-radius: 50px;
+       border-radius: 50px;
+       color: rgba(255, 255, 255, 0.8);
+       // background: $topnav-background-color;
+       background: #094d90;
+       border: 2px solid rgba(255, 255, 255, 0.8);
+       font-size: 18px;
+       line-height: 40px;
+       padding: 0 25px;
+   }
+   .rounded-btn:hover,
+   .rounded-btn:focus,
+   .rounded-btn:active,
+   .rounded-btn:visited {
+       color: rgba(255, 255, 255, 1);
+       border: 2px solid rgba(255, 255, 255, 1);
+       outline: none;
+   }
+   h1 {
+       font-weight: 300;
+       margin-top: 20px;
+       margin-bottom: 10px;
+       font-size: 36px;
+       small {
+           color: rgba(255, 255, 255, 0.7);
+       }
+   }
+   .form-content {
+       padding: 40px 0;
+   }
+   .user-avatar {
+       -webkit-border-radius: 50%;
+       border-radius: 50%;
+       border: 2px solid #fff;
+   }
+}

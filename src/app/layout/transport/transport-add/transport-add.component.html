@@ -1,0 +1,106 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">Transport Add</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+        <button type="button" class="btn btn-primary" (click)="btnClickNav('transport')">
+          <i class="fa fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+    <div>
+      <div class="row">
+        <div class="col-md-12">
+          <form role="form" [formGroup]="form" novalidate>
+            <div class="card bg-light mb-3">
+              <div class="card-header" style="background-color:#868e96; color: #fff;">Transport Add</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="form-group col-md-2">
+                    <label>Transporter Name</label>
+                    <input class="form-control" name="transporter_name" placeholder="Transporter Name" formControlName="transporter_name" [ngClass]="displayFieldCss('transporter_name')">
+                    <div class="invalid-feedback" *ngIf="form.controls['transporter_name'].hasError('required')">
+                      Please enter transporter name
+                    </div>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label>Email</label>
+                    <input class="form-control" name="email" placeholder="Email" formControlName="email" [ngClass]="displayFieldCss('email')">
+                    <div class="invalid-feedback" *ngIf="form.controls['email'].hasError('pattern') && !form.controls['email'].hasError('required')">
+                      Please enter a valid email address
+                    </div>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label>Contact No</label>
+                    <input class="form-control" name="phone" placeholder="Contact No" formControlName="phone" [ngClass]="displayFieldCss('phone')">
+                    <div class="invalid-feedback" *ngIf="form.controls['phone'].hasError('minlength') && !form.controls['phone'].hasError('required')">
+                      Please enter at least 10 digit
+                    </div>
+                    <div class="invalid-feedback" *ngIf="form.controls['phone'].hasError('maxlength') && !form.controls['phone'].hasError('required')">
+                      Phone number should be less then 13 digit
+                    </div>
+                    <div class="invalid-feedback" *ngIf="form.controls['phone'].hasError('required')">
+                      Please enter phone
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>Company</label>
+                    <select class="form-control" name="company" formControlName="company" [ngClass]="displayFieldCss('company')">
+                      <option value="">Select company</option>
+                      <option value="{{country.id}}" *ngFor="let country of companyList">{{country.company_name}}</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="form.controls['company'].hasError('required')">
+                      Please select company
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>State</label>
+                    <select class="form-control" name="state" formControlName="state" [ngClass]="displayFieldCss('state')">
+                      <option value="">Select State</option>
+                      <option value="{{state.id}}" *ngFor="let state of stateList">{{state.state_name}}</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="form.controls['state'].hasError('required')">
+                      Please select state
+                    </div>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label>City</label>
+                    <input class="form-control" name="city" placeholder="City" formControlName="city" [ngClass]="displayFieldCss('city')">
+                    <div class="invalid-feedback" *ngIf="form.controls['city'].hasError('required')">
+                      Please enter city
+                    </div>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label>Pincode</label>
+                    <input class="form-control" name="pin" placeholder="Pincode" formControlName="pin" [ngClass]="displayFieldCss('pin')">
+                    <div class="invalid-feedback" *ngIf="form.controls['pin'].hasError('required')">
+                      Please enter pincode
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>PAN</label>
+                    <input class="form-control" name="pan" placeholder="PAN" formControlName="pan">
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label>GSTIN</label>
+                    <input type="text" class="form-control" name="gstin" placeholder="GSTIN" formControlName="gstin">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label>&nbsp;&nbsp;&nbsp;</label>
+                    <div class="clearfix"></div>
+                    <button type="submit" class="btn btn-primary" (click)="addNewTransport()">Submit</button>
+                    <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</loading>

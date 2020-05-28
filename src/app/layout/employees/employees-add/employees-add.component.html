@@ -1,0 +1,259 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">Employee Add</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+        <button type="button" class="btn btn-primary" (click)="btnClickNav('employees')">
+          <i class="fa fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+    <div>
+      <div class="row">
+        <div class="col-md-12">
+          <form role="form" [formGroup]="form" novalidate>
+            <div class="card bg-light mb-3">
+              <div class="card-header" style="background-color:#868e96; color: #fff;">Employee Add</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="form-group col-md-4">
+                    <label>First Name</label>
+                    <input type="text" class="form-control" name="first_name" placeholder="First Name" formControlName="first_name" [ngClass]="displayFieldCss('first_name')">
+                    <div class="invalid-feedback" *ngIf="form.controls['first_name'].hasError('required')">
+                      Please enter first Name
+                    </div>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label>Last Name</label>
+                    <input type="text" class="form-control" name="last_name" placeholder="Last Name" formControlName="last_name" [ngClass]="displayFieldCss('last_name')">
+                    <div class="invalid-feedback" *ngIf="form.controls['last_name'].hasError('required')">
+                      Please enter last Name
+                    </div>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="email" placeholder="Email" formControlName="email" [ngClass]="displayFieldCss('email')">
+                    <div class="invalid-feedback" *ngIf="form.controls['email'].hasError('pattern') && !form.controls['email'].hasError('required')">
+                      Please enter a valid email address
+                    </div>
+                    <div class="invalid-feedback" *ngIf="form.controls['email'].hasError('required')">
+                      Email is required
+                    </div>
+                  </div>
+                  <div class="form-group col-md-12">
+                    <div class="row" formArrayName="employee_profile_details" *ngFor="let employeeProfile of getEmployeeProfile(form); let i = index;">
+                      <div [formGroupName]="i" class="col-md-12">
+                        <div class="row">
+                          <div class="form-group col-md-4">
+                            <label>Contact No.</label>
+                            <input type="text" appOnlyNumber class="form-control" name="contact" placeholder="Contact No." formControlName="contact"
+                              [ngClass]="{
+                              'is-invalid': employeeProfile.get('contact').invalid && (employeeProfile.get('contact').dirty || employeeProfile.get('contact').touched),
+                              'is-valid': employeeProfile.get('contact').valid && (employeeProfile.get('contact').dirty || employeeProfile.get('contact').touched)
+                            }">
+                            <div class="invalid-feedback" *ngIf="employeeProfile.get('contact').hasError('minlength') && !employeeProfile.get('contact').hasError('required')">
+                              Please enter at least 10 digit
+                            </div>
+                            <div class="invalid-feedback" *ngIf="employeeProfile.get('contact').hasError('maxlength') && !employeeProfile.get('contact').hasError('required')">
+                              Phone number should be less then 13 digit
+                            </div>
+                            <div class="invalid-feedback" *ngIf="employeeProfile.get('contact').hasError('required')">
+                              Please enter phone
+                            </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label>Alternate Contact No.</label>
+                            <input type="text" appOnlyNumber class="form-control" name="alt_contact" placeholder="Alternate Contact No." formControlName="alt_contact"
+                              [ngClass]="{
+                              'is-invalid': employeeProfile.get('alt_contact').invalid && (employeeProfile.get('alt_contact').dirty || employeeProfile.get('alt_contact').touched),
+                              'is-valid': employeeProfile.get('alt_contact').valid && (employeeProfile.get('alt_contact').dirty || employeeProfile.get('alt_contact').touched)
+                            }">
+                            <div class="invalid-feedback" *ngIf="employeeProfile.get('alt_contact').hasError('minlength') && !employeeProfile.get('alt_contact').hasError('required')">
+                              Please enter at least 10 digit
+                            </div>
+                            <div class="invalid-feedback" *ngIf="employeeProfile.get('alt_contact').hasError('maxlength') && !employeeProfile.get('alt_contact').hasError('required')">
+                              Phone number should be less then 13 digit
+                            </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label>DOB</label>
+                            <div class="input-group">
+                              <input class="form-control" placeholder="yyyy-mm-dd" name="dob" ngbDatepicker #d="ngbDatepicker" formControlName="dob" [ngClass]="{
+                                'is-invalid': employeeProfile.get('dob').invalid && (employeeProfile.get('dob').dirty || employeeProfile.get('dob').touched),
+                                'is-valid': employeeProfile.get('dob').valid && (employeeProfile.get('dob').dirty || employeeProfile.get('dob').touched)
+                              }">
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                                </button>
+                              </div>
+                              <div class="invalid-feedback" *ngIf="employeeProfile.get('dob').hasError('required')">
+                                Please enter DOB
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label>Blood Group</label>
+                            <input type="text" class="form-control" name="blood_group" placeholder="Blood Group" formControlName="blood_group">
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label>PAN</label>
+                            <input type="text" class="form-control" name="pan" placeholder="PAN" formControlName="pan">
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label>AADHAAR Number</label>
+                            <input type="text" class="form-control" name="adhaar_no" placeholder="AADHAAR Number" formControlName="adhaar_no" [ngClass]="{
+                              'is-invalid': employeeProfile.get('adhaar_no').invalid && (employeeProfile.get('adhaar_no').dirty || employeeProfile.get('adhaar_no').touched),
+                              'is-valid': employeeProfile.get('adhaar_no').valid && (employeeProfile.get('adhaar_no').dirty || employeeProfile.get('adhaar_no').touched)
+                            }">
+                            <div class="invalid-feedback" *ngIf="employeeProfile.get('adhaar_no').hasError('required')">
+                              Please enter AADHAAR
+                            </div>
+                          </div>
+                          <div class="form-group col-md-12">
+                            <div class="card bg-light mb-3">
+                              <div class="card-header">Employee present address</div>
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="form-group col-md-4">
+                                    <label>Address</label>
+                                    <textarea class="form-control" rows="1" placeholder="Address" name="emp_present_address" formControlName="emp_present_address"
+                                      [ngClass]="{
+                                      'is-invalid': employeeProfile.get('emp_present_address').invalid && (employeeProfile.get('emp_present_address').dirty || employeeProfile.get('emp_present_address').touched),
+                                      'is-valid': employeeProfile.get('emp_present_address').valid && (employeeProfile.get('emp_present_address').dirty || employeeProfile.get('emp_present_address').touched)
+                                    }"></textarea>
+                                    <div class="invalid-feedback" *ngIf="employeeProfile.get('emp_present_address').hasError('required')">
+                                      Please enter address
+                                    </div>
+                                  </div>
+                                  <div class="form-group col-md-3">
+                                    <label>State</label>
+                                    <select class="form-control" name="emp_present_state" formControlName="emp_present_state" [ngClass]="{
+                                      'is-invalid': employeeProfile.get('emp_present_state').invalid && (employeeProfile.get('emp_present_state').dirty || employeeProfile.get('emp_present_state').touched),
+                                      'is-valid': employeeProfile.get('emp_present_state').valid && (employeeProfile.get('emp_present_state').dirty || employeeProfile.get('emp_present_state').touched)
+                                    }">
+                                      <option value="">Select State</option>
+                                      <option value="{{state.id}}" *ngFor="let state of stateList">{{state.state_name}}</option>
+                                    </select>
+                                    <div class="invalid-feedback" *ngIf="employeeProfile.get('emp_present_state').hasError('required')">
+                                      Please select state
+                                    </div>
+                                  </div>
+                                  <div class="form-group col-md-3">
+                                    <label>City</label>
+                                    <input class="form-control" placeholder="City" name="emp_present_city" formControlName="emp_present_city" [ngClass]="{
+                                      'is-invalid': employeeProfile.get('emp_present_city').invalid && (employeeProfile.get('emp_present_city').dirty || employeeProfile.get('emp_present_city').touched),
+                                      'is-valid': employeeProfile.get('emp_present_city').valid && (employeeProfile.get('emp_present_city').dirty || employeeProfile.get('emp_present_city').touched)
+                                    }">
+                                    <div class="invalid-feedback" *ngIf="employeeProfile.get('emp_present_city').hasError('required')">
+                                      Please enter city
+                                    </div>
+                                  </div>
+                                  <div class="form-group col-md-2">
+                                    <label>Pin</label>
+                                    <input class="form-control" placeholder="Pin" name="emp_present_pin" formControlName="emp_present_pin" [ngClass]="{
+                                      'is-invalid': employeeProfile.get('emp_present_pin').invalid && (employeeProfile.get('emp_present_pin').dirty || employeeProfile.get('emp_present_pin').touched),
+                                      'is-valid': employeeProfile.get('emp_present_pin').valid && (employeeProfile.get('emp_present_pin').dirty || employeeProfile.get('emp_present_pin').touched)
+                                    }">
+                                    <div class="invalid-feedback" *ngIf="employeeProfile.get('emp_present_pin').hasError('required')">
+                                      Please enter pincode
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group col-md-12">
+                            <div class="card bg-light mb-3">
+                              <div class="card-header">Employee permanent address</div>
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="form-group col-md-4">
+                                    <label>Address</label>
+                                    <textarea class="form-control" rows="1" placeholder="Address" name="emp_permanent_address" formControlName="emp_permanent_address"></textarea>
+                                  </div>
+                                  <div class="form-group col-md-3">
+                                    <label>State</label>
+                                    <select class="form-control" name="emp_permanent_state" formControlName="emp_permanent_state">
+                                      <option value="">Select State</option>
+                                      <option value="{{state.id}}" *ngFor="let state of stateList">{{state.state_name}}</option>
+                                    </select>
+                                  </div>
+                                  <div class="form-group col-md-3">
+                                    <label>City</label>
+                                    <input class="form-control" placeholder="City" name="emp_permanent_city" formControlName="emp_permanent_city">
+                                  </div>
+                                  <div class="form-group col-md-2">
+                                    <label>Pin</label>
+                                    <input class="form-control" placeholder="Pin" name="emp_permanent_pin" formControlName="emp_permanent_pin">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group col-md-12">
+                            <div class="row">
+                              <div class="form-group col-md-4">
+                                <label>Company</label>
+                                <select class="form-control" name="company" formControlName="company" [ngClass]="{
+                                'is-invalid': employeeProfile.get('company').invalid && (employeeProfile.get('company').dirty || employeeProfile.get('company').touched),
+                                'is-valid': employeeProfile.get('company').valid && (employeeProfile.get('company').dirty || employeeProfile.get('company').touched)
+                              }" (change)="companyChange($event.target.value)">
+                                  <option value="">Select Company</option>
+                                  <option *ngFor="let company of company_list" value="{{company.id}}">{{company.company_name}}</option>
+                                </select>
+                                <div class="invalid-feedback" *ngIf="employeeProfile.get('company').hasError('required')">
+                                  Please select company
+                                </div>
+                              </div>
+                              <div class="form-group col-md-4">
+                                <label>Department</label>
+                                <select class="form-control" name="departments" formControlName="departments" [ngClass]="{
+                                'is-invalid': employeeProfile.get('departments').invalid && (employeeProfile.get('departments').dirty || employeeProfile.get('departments').touched),
+                                'is-valid': employeeProfile.get('departments').valid && (employeeProfile.get('departments').dirty || employeeProfile.get('departments').touched)
+                              }" (change)="departmentChange($event.target.value)">
+                                  <option value="">Select Department</option>
+                                  <option *ngFor="let dept of department_list" value="{{dept.id}}">{{dept.department_name}}</option>
+                                </select>
+                                <div class="invalid-feedback" *ngIf="employeeProfile.get('departments').hasError('required')">
+                                  Please select department
+                                </div>
+                              </div>
+                              <div class="form-group col-md-4">
+                                <label>Designation</label>
+                                <select class="form-control" name="designation" formControlName="designation" [ngClass]="{
+                                'is-invalid': employeeProfile.get('designation').invalid && (employeeProfile.get('designation').dirty || employeeProfile.get('designation').touched),
+                                'is-valid': employeeProfile.get('designation').valid && (employeeProfile.get('designation').dirty || employeeProfile.get('designation').touched)
+                              }">
+                                  <option value="">Select Department</option>
+                                  <option *ngFor="let designation of designation_list" value="{{designation.id}}">{{designation.designation_name}}</option>
+                                </select>
+                                <div class="invalid-feedback" *ngIf="employeeProfile.get('designation').hasError('required')">
+                                  Please select designation
+                                </div>
+                              </div>
+                              <div class="form-group col-md-12" style="text-align: right">
+                                <button type="submit" class="btn btn-primary" (click)="addEmployee()">Submit</button>
+                                <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</loading>

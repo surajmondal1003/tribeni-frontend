@@ -1,0 +1,166 @@
+<nav class="navbar navbar-expand-lg no-padding">
+    <a class="navbar-brand main-logo" href="#">
+        <img class="img-fluid" src="assets/images/logo.png" alt="" />
+    </a>
+    <button class="navbar-toggler pull-right" type="button" (click)="toggleSidebar()">
+        <i class="fa fa-bars text-muted" aria-hidden="true"></i>
+    </button>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto nav-full-pading">
+            <li class="nav-item dropdown" ngbDropdown>
+                <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                    <i class="fa fa-shopping-cart"></i> Purchase
+                    <b class="caret"></b>
+                </a>
+                <div class="dropdown-menu-right" ngbDropdownMenu>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/purchase-requisition']">
+                        <i class="fa fa-pencil" aria-hidden="true"></i> Purchase Requisition
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/purchase-orders']">
+                        <i class="fa fa-shopping-basket" aria-hidden="true"></i> Purchase Orders
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/grn']">
+                        <i class="fa fa-truck" aria-hidden="true"></i> GRN
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/reverse-grn']">
+                        <i class="fa fa-truck" aria-hidden="true"></i> Reverse GRN
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/purchase-invoice']">
+                        <i class="fa fa-money" aria-hidden="true"></i> Purchase Invoice
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" ngbDropdown>
+                <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                    <i class="fa fa-list-alt"></i> Accounting
+                    <b class="caret"></b>
+                </a>
+                <div class="dropdown-menu-right" ngbDropdownMenu>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/accounting']">
+                        <i class="fa fa-money" aria-hidden="true"></i> Payments
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/accounting/payment-reports']">
+                        <i class="fa fa-list-alt" aria-hidden="true"></i> Payment Reports
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" ngbDropdown>
+                <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                    <i class="fa fa-briefcase"></i> Stocks
+                    <b class="caret"></b>
+                </a>
+                <div class="dropdown-menu-right" ngbDropdownMenu>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/stocks']">
+                        <i class="fa fa-list" aria-hidden="true"></i> Stock List
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" ngbDropdown>
+                <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                    <i class="fa fa-list-alt"></i> Reports
+                    <b class="caret"></b>
+                </a>
+                <div class="dropdown-menu-right" ngbDropdownMenu>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/reports/purchase-requisition']">
+                        <i class="fa fa-pencil" aria-hidden="true"></i> Purchase Requisition
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/reports/purchase-order']">
+                        <i class="fa fa-shopping-basket" aria-hidden="true"></i> Purchase Orders
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/reports/grn']">
+                        <i class="fa fa-truck" aria-hidden="true"></i> GRN
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" ngbDropdown>
+                <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                    <i class="fa fa-cog"></i> Employees
+                    <b class="caret"></b>
+                </a>
+                <div class="dropdown-menu-right" ngbDropdownMenu>
+                   
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/departments']">
+                        <i class="fa fa-sitemap" aria-hidden="true"></i> Departments
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/designations']">
+                        <i class="fa fa-address-card" aria-hidden="true"></i> Designations
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/employees']">
+                        <i class="fa fa-users" aria-hidden="true"></i> Employees
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/employees/module-activate-permission']">
+                        <i class="fa fa-users" aria-hidden="true"></i> Module Activate Permission
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/employees/attendance']">
+                        <i class="fa fa-users" aria-hidden="true"></i> Attendance
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" ngbDropdown>
+                <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                    <i class="fa fa-cog"></i> Setting
+                    <b class="caret"></b>
+                </a>
+                <div class="dropdown-menu-right" ngbDropdownMenu>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/states']">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i> States
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/gst-rates']">
+                        <i class="fa fa-line-chart" aria-hidden="true"></i> GST Rates
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/vendor']">
+                        <i class="fa fa-user-circle-o" aria-hidden="true"></i> Vendors
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/vendor-type']">
+                        <i class="fa fa-user-circle-o" aria-hidden="true"></i> Vendor Type
+                    </a>
+                    <a class="dropdown-item" *ngxPermissionsOnly="['Admin', 'Staff']" href="javascript:void(0)" [routerLink]="['/terms-condition']">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i> Terms & Conditions
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/transport']">
+                        <i class="fa fa-truck" aria-hidden="true"></i> Transporters
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/banks']">
+                        <i class="fa fa-university" aria-hidden="true"></i> Banks
+                    </a>
+                   
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/contractors']">
+                        <i class="fa fa-list" aria-hidden="true"></i> Contractors
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/material-group']">
+                        <i class="fa fa-list" aria-hidden="true"></i> Material Group
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/uom']">
+                        <i class="fa fa-list" aria-hidden="true"></i> Unit of Measurement
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/material']">
+                        <i class="fa fa-list" aria-hidden="true"></i> Material
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" ngbDropdown>
+                <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                    <i class="fa fa-building-o"></i> Company
+                    <b class="caret"></b>
+                </a>
+                <div class="dropdown-menu-right" ngbDropdownMenu>
+                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/company']">
+                        <i class="fa fa-university" aria-hidden="true"></i> Company List
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" ngbDropdown>
+                <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                    <i class="fa fa-user"></i> {{logedUser}}
+                    <b class="caret"></b>
+                </a>
+                <div class="dropdown-menu-right" ngbDropdownMenu>
+                    <a class="dropdown-item" [routerLink]="['/login']" (click)="onLoggedout()">
+                        <i class="fa fa-fw fa-power-off"></i>Log Out
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div style="width: 110px;"></div>
+</nav>

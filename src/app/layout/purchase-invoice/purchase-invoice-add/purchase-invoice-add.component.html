@@ -1,0 +1,134 @@
+<loading [state]="loading">
+    <div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="page-header">Purchase Invoice Add</h4>
+            </div>
+            <div class="col-md-6 pull-right" style="text-align: right">
+                <app-help [heading]="help_heading" [description]="help_description"></app-help>
+                <button type="button" class="btn btn-primary" (click)="btnClickNav('purchase-invoice')">
+                    <i class="fa fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <hr/>
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form role="form" [formGroup]="form" novalidate>
+                        <div class="card bg-light mb-3">
+                            <div class="card-header" style="background-color:#868e96; color: #fff;">Purchase Invoice Add</div>
+                            <div class="card-body">
+                                <div class="card bg-light mb-3">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label>GRN No.</label>
+                                                <select class="form-control" (change)="grnChange($event.target.value)" name="grn" formControlName="grn" [ngClass]="displayFieldCss('grn')">
+                                                    <option value="">Select GRN </option>
+                                                    <option value="{{grn.id}}" *ngFor="let grn of grnList">{{grn.grn_no}}</option>
+                                                </select>
+                                                <div class="invalid-feedback" *ngIf="form.controls['grn'].hasError('required')">
+                                                    Please select GRN
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Invoice No.</label>
+                                                <input class="form-control" name="purchase_inv_no" formControlName="purchase_inv_no" [ngClass]="displayFieldCss('purchase_inv_no')"
+                                                    placeholder="Invoice Number">
+
+                                                <div class="invalid-feedback" *ngIf="form.controls['purchase_inv_no'].hasError('required')">
+                                                    Please enter invoice number
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card bg-light mb-3" *ngIf="visible_key">
+                                    <div class="card-header">Header Line</div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <table class="card-body table table-sm ">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Purchase Company</th>
+                                                        <th>Project</th>
+                                                        <th>PO Date</th>
+                                                        <th>Vendor</th>
+                                                        <th>Vendor Address</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{grn_details.company.company_name}}</td>
+                                                        <td>{{grn_details.company.company_name}}</td>
+                                                        <td>{{grn_details.created_at | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{grn_details.vendor.vendor_fullname}}</td>
+                                                        <td>{{grn_details.vendor_address.address}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card bg-light mb-3" *ngIf="visible_key">
+                                    <div class="card-header">Material Line</div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <table class="card-body table  table-hover table-sm table-bordered ">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Material Group</th>
+                                                        <th>Material</th>
+                                                        <th>Rate</th>
+                                                        <th>Quantity</th>
+                                                        <th>Discount (%)</th>
+                                                        <th>Discount amount</th>
+                                                        <th>IGST (%)</th>
+                                                        <th>CGST (%)</th>
+                                                        <th>SGST (%)</th>
+                                                        <th>Total GST</th>
+                                                        <th>Material value</th>
+                                                        <th>Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let mat of material_details_list; let k = index">
+                                                        <td>
+                                                            {{ k + 1}}
+                                                        </td>
+                                                        <td>{{grn_details.grn_detail[k].material.material_type.material_type}}</td>
+                                                        <td>{{grn_details.grn_detail[k].material.material_fullname}} ({{grn_details.grn_detail[k].material.material_code}})</td>
+                                                        <td>{{mat.rate}}</td>
+                                                        <td>{{mat.quantity}}</td>
+                                                        <td>{{mat.discount_per}}</td>
+                                                        <td>{{mat.discount_amount}}</td>
+                                                        <td>{{mat.igst}}</td>
+                                                        <td>{{mat.cgst}}</td>
+                                                        <td>{{mat.sgst}}</td>
+                                                        <td>{{mat.total_gst}}</td>
+                                                        <td>{{mat.material_value}}</td>
+                                                        <td>{{mat.material_amount_pay}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-12" style="text-align: right">
+                                        <button type="submit" class="btn btn-primary" (click)="addPurchaseInvoice()">Submit</button>
+                                        <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</loading>

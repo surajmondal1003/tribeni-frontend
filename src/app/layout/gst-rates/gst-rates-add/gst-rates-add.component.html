@@ -1,0 +1,66 @@
+<loading [state]="loading">
+    <div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="page-header">GST Rate Add</h4>
+            </div>
+            <div class="col-md-6 pull-right" style="text-align: right">
+                <app-help [heading]="help_heading" [description]="help_description"></app-help>
+                <button type="button" class="btn btn-primary" (click)="btnClickNav('gst-rates')">
+                    <i class="fa fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <hr/>
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form role="form" [formGroup]="form" novalidate>
+                        <div class="card bg-light mb-3">
+                            <div class="card-header" style="background-color:#868e96; color: #fff;">GST Rate Add</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-3">
+                                        <label>Identifiable Name</label>
+                                        <input class="form-control" name="gst_pattern" placeholder="Identifiable Name" formControlName="gst_pattern" [ngClass]="displayFieldCss('gst_pattern')">
+                                        <div class="invalid-feedback" *ngIf="form.controls['gst_pattern'].hasError('required')">
+                                            Please enter identifiable name
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>CGST(%)</label>
+                                        <input type="text" appOnlyNumber class="form-control" name="cgst" placeholder="CGST" formControlName="cgst" [ngClass]="displayFieldCss('cgst')"
+                                            (keyup)="GetIgst(form.value.cgst,form.value.sgst)">
+                                        <div class="invalid-feedback" *ngIf="form.controls['cgst'].hasError('required')">
+                                            Please enter CGST
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>SGST(%)</label>
+                                        <input type="text" appOnlyNumber class="form-control" name="sgst" placeholder="SGST" formControlName="sgst" [ngClass]="displayFieldCss('sgst')"
+                                            (keyup)="GetIgst(form.value.cgst,form.value.sgst)">
+                                        <div class="invalid-feedback" *ngIf="form.controls['sgst'].hasError('required')">
+                                            Please enter SGST
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>IGST(%)</label>
+                                        <input type="text" appOnlyNumber class="form-control" name="igst" placeholder="IGST" formControlName="igst" [ngClass]="displayFieldCss('igst')"
+                                            readonly>
+                                        <div class="invalid-feedback" *ngIf="form.controls['igst'].hasError('required')">
+                                            Please enter IGST
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12" style="text-align: right">
+                                        <button type="submit" class="btn btn-primary" (click)="addNewGstRate()">Submit</button>
+                                        <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</loading>

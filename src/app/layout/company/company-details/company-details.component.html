@@ -1,0 +1,119 @@
+<loading [state]="loading">
+    <div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="page-header">Company Details</h4>
+            </div>
+            <div class="col-md-6 pull-right" style="text-align: right">
+                <app-help [heading]="help_heading" [description]="help_description"></app-help>
+                <button type="button" class="btn btn-primary" (click)="btnClickNav('company')">
+                    <i class="fa fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <hr/>
+
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card bg-light mb-3">
+                        <div class="card-header" style="background-color:#868e96; color: #fff;">Company Details : {{company.company_name}}</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ngb-tabset>
+                                        <ngb-tab title="Company Details">
+                                            <ng-template ngbTabContent>
+                                                <table class="card-body table table-hover table-sm table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="2">
+                                                                <label class="control-label ">Company Name : </label>
+                                                                <br>
+                                                                <h5>{{company.company_name}}</h5>
+                                                            </th>
+                                                            <th>
+                                                                <button type="button" class="btn btn-primary" [routerLink]="['/company/edit', company.id]">
+                                                                    <i class="fa fa-edit"></i> Edit</button>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <label class="control-label ">Website : </label>
+                                                                <br>
+                                                                <h5>{{company.company_url}}</h5>
+                                                            </td>
+                                                            <td>
+                                                                <label class="control-label ">Email : </label>
+                                                                <br>
+                                                                <h5>{{company.company_email}}</h5>
+                                                            </td>
+                                                            <td>
+                                                                <label class="control-label ">Phone : </label>
+                                                                <br>
+                                                                <h5>{{company.company_contact}}</h5>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label class="control-label ">Company Address : </label>
+                                                                <br>
+                                                                <h5>{{company.company_address}}</h5>
+                                                            </td>
+                                                            <td>
+                                                                <label class="control-label ">State : </label>
+                                                                <br>
+                                                                <h5>{{states.state_name}}</h5>
+                                                            </td>
+                                                            <td>
+                                                                <label class="control-label ">City : </label>
+                                                                <br>
+                                                                <h5>{{company.company_city}}</h5>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label class="control-label ">Pin : </label>
+                                                                <br>
+                                                                <h5>{{company.company_pin}}</h5>
+                                                            </td>
+                                                            <td>
+                                                                <label class="control-label ">GSTIN : </label>
+                                                                <br>
+                                                                <h5>{{company.company_gst}}</h5>
+                                                            </td>
+                                                            <td>
+                                                                <label class="control-label ">PAN : </label>
+                                                                <br>
+                                                                <h5>{{company.company_pan}}</h5>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3">
+                                                                <label class="control-label ">CIN : </label>
+                                                                <br>
+                                                                <h5>{{company.company_cin}}</h5>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </ng-template>
+                                        </ngb-tab>
+                                        <ngb-tab title="Project">
+                                            <ng-template ngbTabContent>
+                                                <app-project-list></app-project-list>
+                                            </ng-template>
+                                        </ngb-tab>
+                                        
+                                    </ngb-tabset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</loading>

@@ -1,0 +1,45 @@
+<loading [state]="loading">
+    <div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="page-header">Vendor Type Edit</h4>
+            </div>
+            <div class="col-md-6 pull-right" style="text-align: right">
+                <app-help [heading]="help_heading" [description]="help_description"></app-help>
+                <button type="button" class="btn btn-primary" (click)="btnClickNav('vendor-type')">
+                    <i class="fa fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <hr/>
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form role="form" [formGroup]="form">
+                        <div class="card bg-light mb-3">
+                            <div class="card-header" style="background-color:#868e96; color: #fff;">Vendor Type Edit</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-4">
+                                        <label>Vendor Type</label>
+                                        <input class="form-control" type="text" [(ngModel)]="vendorType.vendor_type" name="vendor_type" placeholder="Vendor Type"
+                                            formControlName="vendor_type" [ngClass]="displayFieldCss('vendor_type')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('vendor_type')">
+                                            Please enter vendor type
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group col-md-6" style="text-align: left; padding-top: 26px;">
+                                        <button type="submit" class="btn btn-primary" (click)="updateVendorType()">Submit</button>
+                                        <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</loading>

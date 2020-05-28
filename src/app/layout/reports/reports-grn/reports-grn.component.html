@@ -1,0 +1,319 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">Purchase GRN Report</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+    <div>
+      <div class="row">
+        <div class="col-md-12">
+          <form role="form">
+            <div class="card bg-light mb-3">
+              <div class="card-header" style="background-color:#868e96; color: #fff;">Purchase GRN Report</div>
+              <div class="card-body">
+                <div class="card bg-light mb-3">
+                  <div class="card-header">Search Criteria</div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="form-group col-md-3">
+                        <label>GRN no.</label>
+                        <ng-select class="form-control" placeholder="Select GRN" (change)="grnChange($event)" [clearable]="false" name="grn">
+                          <ng-option [value]="''">Select GRN</ng-option>
+                          <ng-option *ngFor="let grn of grn_list" [value]="grn.id">{{grn.grn_no}}</ng-option>
+                        </ng-select>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>GRN Date</label>
+                        <div class="input-group">
+                          <input class="form-control" placeholder="yyyy-mm-dd" name="grn_date" ngbDatepicker #r="ngbDatepicker" [(ngModel)]="grn_date">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="r.toggle()" type="button">
+                              <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>From Date</label>
+                        <div class="input-group">
+                          <input class="form-control" placeholder="yyyy-mm-dd" name="from_date" ngbDatepicker #f="ngbDatepicker" [(ngModel)]="from_date">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="f.toggle()" type="button">
+                              <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>To Date</label>
+                        <div class="input-group">
+                          <input class="form-control" placeholder="yyyy-mm-dd" name="to_date" ngbDatepicker #t="ngbDatepicker" [(ngModel)]="to_date">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="t.toggle()" type="button">
+                              <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>By Company.</label>
+                        <ng-select class="form-control" placeholder="Select Company" [clearable]="false" name="company" [(ngModel)]="company">
+                          <ng-option [value]="''">Select Company</ng-option>
+                          <ng-option *ngFor="let company of company_list" [value]="company.id">{{company.company_name}}</ng-option>
+                        </ng-select>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>By Project</label>
+                        <ng-select class="form-control" placeholder="Select Project" [clearable]="false" name="project" [(ngModel)]="project">
+                          <ng-option [value]="''">Select Project</ng-option>
+                          <ng-option *ngFor="let project of project_list" [value]="project.id">{{project.project_name}}</ng-option>
+                        </ng-select>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>By Vendor</label>
+                        <ng-select class="form-control" placeholder="Select Vendor" [clearable]="false" name="vendor" [(ngModel)]="vendor">
+                          <ng-option [value]="''">Select Vendor</ng-option>
+                          <ng-option *ngFor="let vendor of vendor_list" [value]="vendor.id">{{vendor.vendor_fullname}}</ng-option>
+                        </ng-select>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>By Staus</label>
+                        <select class="form-control" name="status" [(ngModel)]="status">
+                          <option value="">Select Staus</option>
+                          <option value="1">Active</option>
+                          <option value="0">Inactive</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>By Approval</label>
+                        <select class="form-control" name="approve" [(ngModel)]="approve">
+                          <option value="">Select Approval</option>
+                          <option value="1">Approved</option>
+                          <option value="2">Dis-approved</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-12">
+                          <button type="submit" class="btn btn-primary pull-right" (click)="search()" [disabled]="grn_details_key">Search</button>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="card bg-light mb-3" *ngIf="Search_grn_list_key">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-md-9">
+                        <h5>Results</h5>
+                      </div>
+                      <div class="col-md-3 text-right">
+                        <!-- <button type="submit" class="btn btn-default">Excel</button> -->
+                        <!-- <button type="submit" class="btn btn-default" (click)="generatePdf('ListResult')">PDF</button> -->
+                        <!-- <button type="submit" class="btn btn-default">Print</button> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <table class="card-body table table-hover table-sm table-bordered" id="ListResult">
+                        <thead>
+                          <tr>
+                            <th>Sl.No.</th>
+                            <th>Grn No</th>
+                            <th>Po No
+                              <span class="info" ngbTooltip="Purchase Order Number">i</span>
+                            </th>
+                            <th>Company</th>
+                            <th>Vendor</th>
+                            <th>Vendor Address</th>
+                            <th>GRN Raised Date</th>
+                            <th>Status</th>
+                            <th>Is approved</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let report of SearchGrnList ; let i = index">
+                            <th scope="row">{{itemNo + i +1}}</th>
+                            <td>{{report.grn_no}}</td>
+                            <td>{{report.purchase_order_no}}</td>
+                            <td>{{report.company.company_name}}</td>
+                            <td>{{report.vendor.vendor_fullname}}</td>
+                            <td>{{report.vendor_address.address}}</td>
+                            <td>{{report.created_at | date:'dd-MM-yyyy'}}</td>
+                            <td>
+                              <span *ngIf="report.status">Active</span>
+                              <span *ngIf="!report.status">Inactive</span>
+                            </td>
+                            <td>
+                              <span *ngIf="report.is_approve == 1">Yes</span>
+                              <span *ngIf="report.is_approve == 0">No</span>
+                            </td>
+                          </tr>
+                          <tr *ngIf="SearchGrnList.length == 0">
+                            <td colspan="11" class="text-center">No record found</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="col-md-12" *ngIf="totalSearchGrnList > 0">
+                        <div class="pagination-msg">
+                          <p>Showing {{lower_count}} to {{upper_count}} of {{totalSearchGrnList}} entries</p>
+                        </div>
+                      </div>
+                      <div class="col-md-12" *ngIf="totalSearchGrnList > itemPerPage">
+                        <div class="pull-right">
+                          <ngb-pagination [collectionSize]="totalSearchGrnList" [maxSize]="paginationMaxSize" [(page)]="defaultPagination" (pageChange)="pagination()"
+                            size="sm"></ngb-pagination>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card bg-light mb-3" *ngIf="grn_details_key">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-md-9">
+                        <h5>GRN Number : {{grnDetails.grn_no}}</h5>
+                      </div>
+                      <div class="col-md-3 text-right">
+                        <!-- <button type="submit" class="btn btn-default">Excel</button> -->
+                        <!-- <button type="submit" class="btn btn-default" (click)="generatePdf('DetailsResult')">PDF</button> -->
+                        <!-- <button type="submit" class="btn btn-default">Print</button> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body" id="DetailsResult">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <table class="card-body table table-sm table-bordered">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <label>GRN Number : </label>
+                              </td>
+                              <td>
+                                <label>{{grnDetails.grn_no}}</label>
+                              </td>
+                              <td>
+                                <label>PO Number : </label>
+                              </td>
+                              <td>
+                                <label>{{grnDetails.purchase_order_no}}</label>
+                              </td>
+                            </tr>
+                            
+                            <tr>
+                              <td>
+                                <label>Vendor Name : </label>
+                              </td>
+                              <td>
+                                <label>{{grnDetails.vendor.vendor_fullname}}</label>
+                              </td>
+                              <td>
+                                <label>Vendor Address : </label>
+                              </td>
+                              <td>
+                                <label>{{grnDetails.vendor_address.address}}</label>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <label>GRN Date : </label>
+                              </td>
+                              <td>
+                                <label>{{grnDetails.created_at | date:'yyy-MM-dd'}}</label>
+                              </td>
+                              <td>
+                                <label>Waybill Number : </label>
+                              </td>
+                              <td>
+                                <label>{{grnDetails.waybill_no}}</label>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <label>Challan Number : </label>
+                              </td>
+                              <td>
+                                <label>{{grnDetails.challan_no}}</label>
+                              </td>
+                              <td>
+                                <label>Challan Date : </label>
+                              </td>
+                              <td>
+                                <label>{{grnDetails.challan_date | date:'yyy-MM-dd'}}</label>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <label>Indent Raised By :</label>
+                              </td>
+                              <td colspan="3">
+                                <label>{{grnDetails.created_by.first_name}}</label>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-md-12">
+                        <h4>Material Line</h4>
+                        <hr/>
+                      </div>
+                      <div class="col-md-12">
+                        <table class="card-body table table-hover table-sm table-bordered">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th>Material Group</th>
+                              <th>Material</th>
+                              <th>Rate</th>
+                              <th>Quantity</th>
+                              <th>UOM</th>
+                              <th>Discount (%)</th>
+                              <th>Discount amount</th>
+                              <th>IGST (%)</th>
+                              <th>CGST (%)</th>
+                              <th>SGST (%)</th>
+                              <th>Total GST</th>
+                              <th>Material value</th>
+                              <th>Material amount to pay</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let mat of material_details_list; let k = index">
+                              <td>
+                                {{ k + 1}}
+                              </td>
+                              <td>{{grnDetails.grn_detail[k].material.material_type.material_type}}</td>
+                              <td>{{grnDetails.grn_detail[k].material.material_fullname}} ({{grnDetails.grn_detail[k].material.material_code}})</td>
+                              <td>{{mat.rate}}</td>
+                              <td>{{mat.quantity}}</td>
+                              <td>{{grnDetails.grn_detail[k].material_uom}}</td>
+                              <td>{{mat.discount_per}}</td>
+                              <td>{{mat.discount_amount}}</td>
+                              <td>{{mat.igst}}</td>
+                              <td>{{mat.cgst}}</td>
+                              <td>{{mat.sgst}}</td>
+                              <td>{{mat.total_gst}}</td>
+                              <td>{{mat.material_value}}</td>
+                              <td>{{mat.material_amount_pay}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</loading>

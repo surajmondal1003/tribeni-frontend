@@ -1,0 +1,164 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">GRN Reverse Add</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+        <button type="button" class="btn btn-primary" (click)="btnClickNav('reverse-grn')">
+          <i class="fa fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+    <div>
+      <div class="row">
+        <div class="col-md-12">
+          <form role="form" [formGroup]="form" novalidate>
+            <div class="card bg-light mb-3">
+              <div class="card-header" style="background-color:#868e96; color: #fff;">GRN Reverse Add</div>
+              <div class="card-body">
+                <div class="card bg-light mb-3">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="form-group col-md-3">
+                        <label>GRN No.</label>
+                        <select class="form-control" (change)="grnChange($event.target.value)" name="grn" formControlName="grn" [ngClass]="displayFieldCss('grn')">
+                          <option value="">Select GRN</option>
+                          <option value="{{grn.id}}" *ngFor="let grn of grnList">{{grn.grn_no}}</option>
+                        </select>
+                        <div class="invalid-feedback" *ngIf="form.controls['grn'].hasError('required')">
+                          Please select GRN
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card bg-light mb-3" *ngIf="visible_key">
+                  <div class="card-header">Header Line</div>
+                  <div class="card-body">
+                    <div class="row">
+                      <table class="card-body table table-sm ">
+                        <thead>
+                          <tr>
+                            <th>Company</th>
+                            <th>Project</th>
+                            <th>PO Date</th>
+                            <th>Vendor</th>
+                            <th>Vendor Address</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>{{grn_details.company.company_name}}</td>
+                            <td>{{grn_details.project.name}}</td>
+                            <td>{{grn_details.created_at | date:'dd-MM-yyyy'}}</td>
+                            <td>{{grn_details.vendor.vendor_fullname}}</td>
+                            <td>{{grn_details.vendor_address.address}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="card bg-light mb-3" *ngIf="visible_key && previous_reverse_grn_list.length > 0">
+                  <div class="card-header">Previous GRN</div>
+                  <div class="card-body">
+                    <div class="card bg-light mb-3" *ngFor="let prevRevGrn of previous_reverse_grn_list">
+                      <div class="card-header">Reverse GRN No ({{prevRevGrn.revers_gen_no}})</div>
+                      <div class="card-body">
+                        <div class="row">
+                          <table class="card-body table table-sm ">
+                            <thead>
+                              <tr>
+                                <th>Company</th>
+                                <th>Vendor</th>
+                                <th>Vendor Address</th>
+                                <th>Material</th>
+                                <th>UMO</th>
+                                <th>Reverse Qty.</th>
+                                <th>Recieved At</th>
+                                <th>Reason</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let grn of prevRevGrn.reverse_grn_detail">
+                                <td>{{prevRevGrn.company}}</td>
+                                <td>{{prevRevGrn.vendor_name}}</td>
+                                <td>{{prevRevGrn.vendor_address}}</td>
+                                <td>{{grn.material_details.name}}</td>
+                                <td>{{grn.material_uom}}</td>
+                                <td>{{grn.reverse_grn_quantity}}</td>
+                                <td>{{prevRevGrn.created_at | date:'dd-MM-yyyy'}}</td>
+                                <td>{{grn.reverse_reason}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card bg-light mb-3" *ngIf="visible_key">
+                  <div class="card-header">Material Line</div>
+                  <div class="card-body">
+                    <div class="row">
+                      <table class="card-body table  table-hover table-sm table-bordered ">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>Material Group</th>
+                            <th>Material</th>
+                            <th>Po. Quantity</th>
+                            <th>GRN Quantity</th>
+                            <th>Rest Quantity</th>
+                            <th>UOM</th>
+                            <th>Reverse GRN Quantity</th>
+                            <th>Reason</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let mat of grn_details.grn_detail; let k = index">
+                            <td>
+                              <div class="checkbox" *ngIf="getAvailQty(material_details_list[k].rest_quantity)">
+                                <label>
+                                  <input type="checkbox" (change)="matCheck($event, mat)">
+                                </label>
+                              </div>
+                            </td>
+                            <th>{{mat.material.material_type.material_type}}</th>
+                            <td>{{mat.material.material_fullname}} ({{mat.material.material_code}})</td>
+                            <td>{{mat.order_quantity}}</td>
+                            <td>{{mat.receive_quantity}}</td>
+                            <td>{{material_details_list[k].rest_quantity}}</td>
+                            <td>{{mat.material_uom}}</td>
+                            <td width="200">
+                              <input appOnlyNumber type="text" class="form-control" placeholder="GRN Quantity" [(ngModel)]="material_details_list[k].reverse_grn_quantity"
+                                [ngModelOptions]="{standalone: true}" (keyup)="RevGnrQuantity(material_details_list[k].reverse_grn_quantity, k)" *ngIf="getAvailQty(material_details_list[k].rest_quantity)">
+                            </td>
+                            <td>
+                              <textarea name="reverse_reason" class="form-control" placeholder="Reason" [(ngModel)]="material_details_list[k].reverse_reason"
+                                [ngModelOptions]="{standalone: true}" *ngIf="getAvailQty(material_details_list[k].rest_quantity)"></textarea>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-12" style="text-align: right">
+                    <button type="submit" class="btn btn-primary" (click)="addReverseGrn()">Submit</button>
+                    <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</loading>

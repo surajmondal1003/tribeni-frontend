@@ -1,0 +1,79 @@
+<div>
+  <div class="row">
+    <div class="col-md-6">
+      <h4 class="page-header">Expenses List</h4>
+    </div>
+    <div class="col-md-6 pull-right" style="text-align: right">
+      <app-help [heading]="help_heading" [description]="help_description"></app-help>
+      <button type="button" class="btn btn-primary" (click)="btnClickNav('expenses/add')">
+        <i class="fa fa-plus"></i> New Expense</button>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <hr/>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-9">
+              <h5>Expense</h5>
+            </div>
+            <div class="col-md-3">
+              <form role="form" (ngSubmit)="dataSearch()">
+                <div class="input-group">
+                  <input type="text" class="form-control" name="search" placeholder="Search" [(ngModel)]="search_key">
+                  <div class="input-group-append">
+                    <button class="btn btn-secondary" type="submit">
+                      <i class="fa fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <table class="card-body table table-hover table-sm table-bordered">
+          <thead>
+            <tr>
+              <th>Sl.No.</th>
+              <th>Company</th>
+              <th>Employee</th>
+              <th>Expense</th>
+              <th>Purpost</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr >
+              <th scope="row">1</th>
+              <td>Shyam Future</td>
+              <td>Shashi kumar</td>
+              <td>1000</td>
+              <td>Stationary</td>
+              <td>
+                <a href="javascript:void(0);" title="Active" name="Active" >
+                  <i class="fa fa-thumbs-up"></i> Active</a>
+                
+              </td>
+              <td>
+                <a href="javascript:void(0);" title="Edit" name="Edit" [routerLink]="['/expenses/edit', 1]"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;
+                <a href="javascript:void(0);" title="Map" name="Map" ><i class="fa fa-trash-o"></i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="col-md-12">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="default" color="#fff" type="ball-spin"></ngx-spinner>

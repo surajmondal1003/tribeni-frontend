@@ -1,0 +1,223 @@
+.fs-12 {
+    font-size: 12px;
+}
+
+.main-body .navbar {
+    background-color: #284c6f !important;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
+}
+
+.main-body .navbar a {
+    color: #fff !important;
+    padding: 0;
+    font-size: 14px;
+}
+
+.main-body .dropdown-menu a {
+    background-color: #284c6f !important;
+    padding: 10px;
+}
+
+.main-body .dropdown-menu a:hover {
+    background-color: #0c559c !important;
+}
+
+.dropdown-menu {
+    padding: 0;
+}
+
+.main-body .login-page {
+    background: url(../assets/images/login-bg.jpg) no-repeat 0 0 !important;
+    background-size: 100% !important;
+}
+
+.main-body .login-page .login-form {
+    // background: #499bea;
+    background: #284c6f;
+    padding: 20px;
+    border-radius: 14px;
+    margin-top: 12%;
+    -webkit-box-shadow: 1px -1px 50px -1px rgba(0, 0, 0, 0.64);
+    -moz-box-shadow: 1px -1px 50px -1px rgba(0, 0, 0, 0.64);
+    box-shadow: 1px -1px 50px -1px rgba(0, 0, 0, 0.64);
+}
+
+.main-body .main-container {
+    background: url(../assets/images/all-bg.jpg) no-repeat 0 0 !important;
+    background-attachment: fixed;
+    background-size: 100% !important;
+    min-height: 612px;
+}
+
+.main-body .landingpage {
+    text-align: center;
+    font-size: 28px;
+    padding: 36px 0 12px;
+    color: #1976d2;
+    font-weight: bold;
+    text-shadow: 2px 1px 1px #B6B8BF;
+}
+
+.main-body .ibox {
+    height: 5px;
+    width: 166px;
+    background: #1976d2;
+    display: inline-block;
+}
+
+.cata-gory .inner-contant {
+    padding: 10px;
+    text-align: center;
+    background: #fff;
+    -webkit-box-shadow: -1px -1px 16px -3px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px -1px 16px -3px rgba(0, 0, 0, 0.75);
+    box-shadow: -1px -1px 16px -3px rgba(0, 0, 0, 0.75);
+    min-height: 230px;
+}
+
+.cata-gory .inner-contant i {
+    font-size: 46px;
+    color: #1976d2;
+}
+
+.cata-gory .inner-contant h4 {
+    font-size: 25px;
+}
+
+.cata-gory .inner-contant a {
+    padding: 8px;
+    color: #1976d2;
+    border: 2px solid #00000042;
+    border-radius: 7px;
+    font-size: 16px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all .40s ease-out;
+}
+
+.cata-gory .inner-contant a:hover {
+    background: #094d90;
+    color: #fff;
+    transition: all .40s ease;
+}
+
+.cata-gory {
+    margin-top: 28px;
+}
+
+.pagination-msg p {
+    color: #212529;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.help .modal-content {
+    margin-top: 50%;
+}
+
+.help .modal-content .modal-header {
+    background: #284c6f;
+    color: #fff;
+    padding: 5px 10px;
+}
+
+.help .modal-content .modal-header .close {
+    background: #fff;
+    opacity: 1;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    padding: 12px;
+    line-height: 1px;
+    text-align: center;
+}
+
+.help .modal-content .modal-header .close span {
+    margin-left: -6px;
+    font-size: 21px;
+}
+
+.btn-primary {
+    background-color: #284c6f !important;
+    border-color: #284c6f !important;
+}
+
+.btn-primary:hover {
+    background-color: #1a3650 !important;
+    border-color: #1a3650 !important;
+}
+
+.anchor-action {
+    color: #007bff !important;
+    text-decoration: none;
+}
+
+.anchor-action:hover {
+    color: #0c6b10 !important;
+    text-decoration: none;
+}
+
+.nav-full-pading .nav-item .nav-link {
+    padding: 19px 6px;
+    transition: all .40s ease-out
+}
+
+.nav-full-pading .nav-item .nav-link:hover {
+    background-color: #0c559c;
+    transition: all .40s ease;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.main-logo {
+    padding-left: 22px !important;
+}
+
+.nav-full-pading .dropdown-menu {
+    margin-top: 0;
+    border: none;
+}
+
+// 28-05-2018
+.info {
+    width: 15px;
+    height: 15px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 12px;
+    font-size: 10px;
+    cursor: pointer;
+    color: #000;
+}
+.form-control.ng-select{
+    padding: 0;
+}
+.ng-select.ng-select-single .ng-select-container{
+    border: none;
+    height: calc(1.875rem + 2px);
+    min-height: calc(1.875rem + 2px);
+}
+
+.mat-dialog-container .modal-footer{
+    border: none;
+}
+
+.inactive-color
+{
+    color: #cecece !important;
+}
+
+.active-color
+{
+    color: #284c6f !important;
+}
+.custom-table-head
+{
+    cursor: pointer;
+}

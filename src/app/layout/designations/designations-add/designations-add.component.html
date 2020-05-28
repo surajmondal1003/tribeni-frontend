@@ -1,0 +1,63 @@
+<loading [state]="loading">
+    <div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="page-header">Designation Add</h4>
+            </div>
+            <div class="col-md-6 pull-right" style="text-align: right">
+                <app-help [heading]="help_heading" [description]="help_description"></app-help>
+                <button type="button" class="btn btn-primary" (click)="btnClickNav('designations')">
+                    <i class="fa fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <hr/>
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form role="form" [formGroup]="form" novalidate>
+                        <div class="card bg-light mb-3">
+                            <div class="card-header" style="background-color:#868e96; color: #fff;">Designation Add</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-4">
+                                        <label>Company</label>
+                                        <select class="form-control" name="company" formControlName="company" [ngClass]="displayFieldCss('company')" (change)="companyChange($event.target.value)">
+                                            <option value="">Select Company</option>
+                                            <option *ngFor="let company of company_list" value="{{company.id}}">{{company.company_name}}</option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('company')">
+                                            Please select company
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Department</label>
+                                        <select class="form-control" name="departments" formControlName="departments" [ngClass]="displayFieldCss('departments')">
+                                            <option value="">Select Department</option>
+                                            <option *ngFor="let dept of department_list" value="{{dept.id}}">{{dept.department_name}}</option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('departments')">
+                                            Please select department
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Designation name</label>
+                                        <input type="text" class="form-control" name="designation_name" placeholder="Designation name" formControlName="designation_name"
+                                            [ngClass]="displayFieldCss('designation_name')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('designation_name')">
+                                            Please enter Designation name
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12" style="text-align: right">
+                                        <button type="submit" class="btn btn-primary" (click)="addDesignation()">Submit</button>
+                                        <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</loading>

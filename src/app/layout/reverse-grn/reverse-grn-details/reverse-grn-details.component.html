@@ -1,0 +1,162 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">Reverse GRN Details</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+        <button type="button" class="btn btn-primary" (click)="btnClickNav('reverse-grn')">
+          <i class="fa fa-arrow-left"></i> Back</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+
+   <div *ngIf="visible_key">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card bg-light mb-3">
+            <div class="card-header" style="background-color:#868e96; color: #fff;">Reverse GRN Number : {{reverse_grnDetails.revers_gen_no}} </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <table class="card-body table table-sm table-bordered">
+
+                    <tbody>
+                      <tr>
+                        <td>
+                          <label>GRN Number : </label>
+                        </td>
+                        <td>
+                          <label>{{reverse_grnDetails.grn_no}}</label>
+                        </td>
+                        <td>
+                          <label>PO Number : </label>
+                        </td>
+                        <td>
+                          <label>{{reverse_grnDetails.purchase_order_no}}</label>
+                        </td>
+
+                      </tr>
+                      <tr>
+                        <td>
+                          <label>Company : </label>
+                        </td>
+                        <td>
+                          <label>{{reverse_grnDetails.company.company_name}}</label>
+                        </td>
+                        <td>
+                          <label>Project : </label>
+                        </td>
+                        <td>
+                          <label>{{reverse_grnDetails.project.name}}</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label>Vendor Name : </label>
+                        </td>
+                        <td>
+                          <label>{{reverse_grnDetails.vendor_name}}</label>
+                        </td>
+                        <td>
+                          <label>Vendor Address : </label>
+                        </td>
+                        <td>
+                          <label>{{reverse_grnDetails.vendor_address}}</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <label>Reverse GRN Date : </label>
+                        </td>
+                        <td>
+                          <label>{{reverse_grnDetails.created_at | date:'yyy-MM-dd'}}</label>
+                        </td>
+                        <td>
+                          <label>Reverse GRN Raised By :</label>
+                        </td>
+                        <td>
+                          <label>{{reverse_grnDetails.created_by.first_name}}</label>
+                        </td>
+                      </tr>
+                      
+                    </tbody>
+
+                  </table>
+                </div>
+                <div class="col-md-12">
+                  <h4>Items Reversed</h4>
+                  <hr/>
+                </div>
+                <div class="col-md-12">
+                  <table class="card-body table table-hover table-sm table-bordered">
+                    <thead>
+                      <tr>
+                        <th>
+                          <label>Material Group</label>
+                        </th>
+                        <th>
+                          <label>Material</label>
+                        </th>
+                        <th>
+                          <label>Quantity</label>
+                        </th>
+                        <th>
+                          <label>UOM</label>
+                        </th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of reverse_grnDetails.reverse_grn_detail">
+                        <td>
+                          <label>{{item.material_details.material_type}}</label>
+                        </td>
+                        <td>
+                          <label>{{item.material_details.name}} ({{item.material_details.material_code}})</label>
+                        </td>
+                        <td>
+                          <label>{{item.reverse_grn_quantity}}</label>
+                        </td>
+                        <td>
+                          <label>{{item.material_uom}}</label>
+                        </td>
+                      </tr>
+                      
+                      
+                    </tbody>
+                  </table>
+                </div>
+                
+                
+                <div class="col-md-12">
+                  <h4>Approve Status</h4>
+                  <hr/>
+                </div>
+                <div class="col-md-4"  *ngIf="!isApproveStatus">
+                  <label *ngIf="reverse_grnDetails.is_finalised == 1" style="display: inline;">Finalised</label>
+                  <label *ngIf="reverse_grnDetails.is_approve == 1 && reverse_grnDetails.is_finalised == 0" style="display: inline;">Approved</label>
+                  <label *ngIf="reverse_grnDetails.is_approve == 2 && reverse_grnDetails.is_finalised == 0" style="display: inline;">Rejected</label>
+                  <select *ngIf="reverse_grnDetails.is_finalised == 0 && reverse_grnDetails.is_approve == 0" class="form-control" name="is_approve"
+                    (change)="changeApproveStatus($event.target.value,reverse_grnDetails.id,reverse_grnDetails.approval_level)">
+                    <option value='0'>None</option>
+                    <option value='1'>Approve</option>
+                    <option value='2'>Reject</option>
+                  </select>
+                </div>
+                <div class="col-md-4" *ngIf="isApproveStatus">
+                  <label *ngIf="reverse_grnDetails.is_finalised == 1" style="display: inline;">Finalised</label>
+                  <label *ngIf="reverse_grnDetails.is_finalised == 0" style="display: inline;">Approved</label>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</loading>

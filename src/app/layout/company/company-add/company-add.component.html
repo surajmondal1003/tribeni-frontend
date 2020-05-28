@@ -1,0 +1,129 @@
+<loading [state]="loading">
+    <div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="page-header">Add Company</h4>
+            </div>
+            <div class="col-md-6 pull-right" style="text-align: right">
+                <app-help [heading]="help_heading" [description]="help_description"></app-help>
+                <button type="button" class="btn btn-primary" (click)="btnClickNav('company')">
+                    <i class="fa fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <hr/>
+
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form role="form" [formGroup]="form" novalidate>
+                        <div class="card bg-light mb-3">
+                            <div class="card-header" style="background-color:#868e96; color: #fff;">Company Add</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label>Mother Company</label>
+                                        <select class="form-control" name="company_list" formControlName="parent" [ngClass]="displayFieldCss('parent')">
+                                            <option value="">Select Mother company</option>
+                                            <option *ngFor="let motherCompany of companyList ;" value="{{motherCompany.id}}">{{motherCompany.company_name}}</option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="form.controls['parent'].hasError('required')">
+                                            Please select mother company
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Company Name</label>
+                                        <input type="text" class="form-control" name="company_name" placeholder="Name" formControlName="company_name" [ngClass]="displayFieldCss('company_name')">
+                                        <div class="invalid-feedback" *ngIf="form.controls['company_name'].hasError('required')">
+                                            Please enter company name
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Website</label>
+                                        <input type="text" class="form-control" name="company_url" placeholder="Website" formControlName="company_url" [ngClass]="displayFieldCss('company_url')">
+                                        <div class="invalid-feedback" *ngIf="form.controls['company_url'].hasError('pattern') && !form.controls['company_url'].hasError('required')">
+                                            Please enter a valid website
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Email</label>
+                                        <input type="email" class="form-control" name="company_email" placeholder="Email" formControlName="company_email" [ngClass]="displayFieldCss('company_email')">
+                                        <div class="invalid-feedback" *ngIf="form.controls['company_email'].hasError('pattern') && !form.controls['company_email'].hasError('required')">
+                                            Please enter a valid email address
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Phone</label>
+                                        <input type="text" appOnlyNumber class="form-control" name="company_contact" placeholder="Phone" formControlName="company_contact"
+                                            [ngClass]="displayFieldCss('company_contact')">
+                                        <div class="invalid-feedback" *ngIf="form.controls['company_contact'].hasError('minlength') && !form.controls['company_contact'].hasError('required')">
+                                            Please enter at least 10 digit
+                                        </div>
+                                        <div class="invalid-feedback" *ngIf="form.controls['company_contact'].hasError('maxlength') && !form.controls['company_contact'].hasError('required')">
+                                            Phone number should be less then 13 digit
+                                        </div>
+                                        <div class="invalid-feedback" *ngIf="form.controls['company_contact'].hasError('required')">
+                                            Please enter phone
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>Company Address</label>
+                                        <textarea class="form-control" rows="3" placeholder="Company Address" name="company_address" formControlName="company_address"
+                                            [ngClass]="displayFieldCss('company_address')"></textarea>
+                                        <div class="invalid-feedback" *ngIf="form.controls['company_address'].hasError('required')">
+                                            Please enter address
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>State</label>
+                                        <select class="form-control" name="company_state" formControlName="company_state" [ngClass]="displayFieldCss('company_state')">
+                                            <option value="">Select State</option>
+                                            <option *ngFor="let state of stateList ;" value="{{state.id}}">{{state.state_name}}</option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="form.controls['company_state'].hasError('required')">
+                                            Please select state
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>City</label>
+                                        <input type="text" class="form-control" placeholder="City Name" name="company_city" formControlName="company_city" [ngClass]="displayFieldCss('company_city')">
+                                        <div class="invalid-feedback" *ngIf="form.controls['company_city'].hasError('required')">
+                                            Please enter city
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Pin</label>
+                                        <input type="text" appOnlyNumber class="form-control" placeholder="Pin" name="company_pin" formControlName="company_pin"
+                                            [ngClass]="displayFieldCss('company_pin')">
+                                        <div class="invalid-feedback" *ngIf="form.controls['company_pin'].hasError('required')">
+                                            Please enter pin
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>GSTIN</label>
+                                        <input type="text" class="form-control" placeholder="GSTIN" name="company_gst" formControlName="company_gst">
+
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>PAN</label>
+                                        <input type="text" class="form-control" placeholder="PAN" name="company_pan" formControlName="company_pan">
+
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>CIN</label>
+                                        <input type="text" class="form-control" placeholder="CIN" placeholder="CIN" name="company_cin" formControlName="company_cin">
+
+                                    </div>
+                                    <div class="form-group col-md-12" style="text-align: right">
+                                        <button type="submit" class="btn btn-primary" (click)="addNewCompany()">Submit</button>
+                                        <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</loading>

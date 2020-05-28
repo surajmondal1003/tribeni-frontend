@@ -1,0 +1,116 @@
+<loading [state]="loading">
+    <div>
+        <div style="padding-top: 20px;">
+            <div class="col-md-6 offset-md-6 pull-right" style="text-align: right">
+                <app-help [heading]="help_heading" [description]="help_description"></app-help>
+                <button type="button" class="btn btn-primary" (click)="btnClickNav()">
+                    <i class="fa fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <hr/>
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form role="form" [formGroup]="form">
+                        <div class="card bg-light mb-3">
+                            <div class="card-header" style="background-color:#868e96; color: #fff;">Company Branch Edit</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-4">
+                                        <label>Branch Name</label>
+                                        <input type="text" class="form-control" [(ngModel)]="companyBranch.branch_name" name="branch_name" placeholder="Branch Name"
+                                            formControlName="branch_name" [ngClass]="displayFieldCss('branch_name')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('branch_name')">
+                                            Please enter branch name
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Email</label>
+                                        <input type="email" class="form-control" [(ngModel)]="companyBranch.branch_email" name="branch_email" placeholder="Email"
+                                            formControlName="branch_email" [ngClass]="displayFieldCss('branch_email')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('branch_email')">
+                                            Please enter email
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Phone</label>
+                                        <input type="text" appOnlyNumber class="form-control" [(ngModel)]="companyBranch.branch_contact_no" name="branch_contact_no"
+                                            placeholder="Phone" formControlName="branch_contact_no" [ngClass]="displayFieldCss('branch_contact_no')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('branch_contact_no')">
+                                            Please enter phone
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>Branch Address</label>
+                                        <textarea class="form-control" [(ngModel)]="companyBranch.branch_address" name="branch_address" rows="3" placeholder="Branch Address"
+                                            formControlName="branch_address" [ngClass]="displayFieldCss('branch_address')">{{companyBranch.branch_address}}</textarea>
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('branch_address')">
+                                            Please enter branch address
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>State</label>
+                                        <select class="form-control" [(ngModel)]="companyBranch.branch_state" name="branch_state" formControlName="branch_state"
+                                            [ngClass]="displayFieldCss('branch_state')">
+                                            <option value="">Select State</option>
+                                            <option *ngFor="let state of stateList;" value="{{state.id}}">{{state.state_name}}</option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('branch_state')">
+                                            Please select state
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>City</label>
+                                        <input type="text" class="form-control" placeholder="City Name" [(ngModel)]="companyBranch.branch_city" name="branch_city"
+                                            formControlName="branch_city" [ngClass]="displayFieldCss('branch_city')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('branch_city')">
+                                            Please enter state
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Pin</label>
+                                        <input type="text" appOnlyNumber class="form-control" placeholder="Pin" [(ngModel)]="companyBranch.branch_pincode" name="branch_pincode"
+                                            formControlName="branch_pincode" [ngClass]="displayFieldCss('branch_pincode')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('branch_pincode')">
+                                            Please enter pin
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>GSTIN</label>
+                                        <input type="text" class="form-control" placeholder="GSTIN" [(ngModel)]="companyBranch.branch_gstin" name="branch_gstin"
+                                            formControlName="branch_gstin" [ngClass]="displayFieldCss('branch_gstin')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('branch_gstin')">
+                                            Please enter GSTIN
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>PAN</label>
+                                        <input type="text" class="form-control" placeholder="PAN" [(ngModel)]="companyBranch.branch_pan" name="branch_pan" formControlName="branch_pan"
+                                            [ngClass]="displayFieldCss('branch_pan')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('branch_pan')">
+                                            Please enter PAN
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>CIN</label>
+                                        <input type="text" class="form-control" placeholder="CIN" [(ngModel)]="companyBranch.branch_cin" name="branch_cin" formControlName="branch_cin"
+                                            [ngClass]="displayFieldCss('branch_cin')">
+                                        <div class="invalid-feedback" *ngIf="isFieldValid('branch_cin')">
+                                            Please enter CIN
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12" style="text-align: right">
+                                        <button type="submit" class="btn btn-primary" (click)="updateCompanyBranch()">Submit</button>
+                                        <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</loading>

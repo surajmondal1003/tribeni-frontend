@@ -1,0 +1,150 @@
+<div>
+  <div class="row">
+    <div class="col-md-6">
+      <h4 class="page-header">Stocks Transfer Add</h4>
+    </div>
+    <div class="col-md-6 pull-right" style="text-align: right">
+      <app-help [heading]="help_heading" [description]="help_description"></app-help>
+      <button type="button" class="btn btn-primary" (click)="btnClickNav('stocks-transfer')">
+        <i class="fa fa-arrow-left"></i> Back</button>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <hr/>
+  <div>
+    <div class="row">
+      <div class="col-md-12">
+        <form role="form">
+          <div class="card bg-light mb-3">
+            <div class="card-header" style="background-color:#868e96; color: #fff;">Stocks Transfer Add</div>
+            <div class="card-body">
+              <div class="card bg-light mb-3">
+                <div class="card-header">Stocks Transfer From</div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="form-group col-md-3">
+                      <label>Company</label>
+                      <select class="form-control">
+                        <option value="">Select Company</option>
+                        <option value="">Shyam Futuretech</option>
+                        <option value="">XYZ</option>
+                        <option value="">ABC</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Plant</label>
+                      <select class="form-control">
+                        <option value="">Select Plant</option>
+                        <option value="">MATLA BDS BRIDGE</option>
+                        <option value="">XYZ BDS BRIDGE</option>
+                        <option value="">ABC BDS BRIDGE</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Storage</label>
+                      <select class="form-control">
+                        <option value="">Select Storage</option>
+                        <option value="">Kolkata, , WEST BENGAL, 7010001</option>
+                        <option value="">XYZ WEST BENGAL</option>
+                        <option value="">ABC WEST BENGAL</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Bin</label>
+                      <select class="form-control">
+                        <option value="">Select Bin</option>
+                        <option value="">01BH</option>
+                        <option value="">023FGH</option>
+                        <option value="">023HKL</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Material</label>
+                      <select class="form-control">
+                        <option value="">Select Material</option>
+                        <option value="">Raw product</option>
+                        <option value="">Woods</option>
+                        <option value="">Stationary</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>UOM</label>
+                      <select class="form-control">
+                        <option value="">Select UOM</option>
+                        <option value="SQFT"> SQFT </option>
+                        <option value="SQMT"> SQMT </option>
+                        <option value="PCS"> PCS </option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Quantity</label>
+                      <input type="text" class="form-control" name="quantity" placeholder="Quantity">
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Rate</label>
+                      <input type="text" class="form-control" name="rate" placeholder="Rate">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card bg-light mb-3">
+                <div class="card-header">Stocks Transfer To</div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="form-group col-md-3">
+                      <label>Company</label>
+                      <select class="form-control">
+                        <option value="">Select Company</option>
+                        <option value="">Shyam Futuretech</option>
+                        <option value="">XYZ</option>
+                        <option value="">ABC</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Plant</label>
+                      <select class="form-control">
+                        <option value="">Select Plant</option>
+                        <option value="">MATLA BDS BRIDGE</option>
+                        <option value="">XYZ BDS BRIDGE</option>
+                        <option value="">ABC BDS BRIDGE</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label>Storage</label>
+                      <select class="form-control">
+                        <option value="">Select Storage</option>
+                        <option value="">Kolkata, , WEST BENGAL, 7010001</option>
+                        <option value="">XYZ WEST BENGAL</option>
+                        <option value="">ABC WEST BENGAL</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label>Bin</label>
+                      <select class="form-control">
+                        <option value="">Select Bin</option>
+                        <option value="">01BH</option>
+                        <option value="">023FGH</option>
+                        <option value="">023HKL</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label>Transfer Quantity</label>
+                      <input type="text" class="form-control" name="transfer_quantity" placeholder="Transfer Quantity">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-12" style="text-align: right">
+                  <button type="submit" class="btn btn-primary" (click)="addStocksTransfer()">Submit</button>
+                  <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="default" color="#fff" type="ball-spin"></ngx-spinner>

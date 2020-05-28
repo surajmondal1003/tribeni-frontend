@@ -1,0 +1,83 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">Employees Attendance</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+        <button type="button" class="btn btn-primary" (click)="btnClickNav('employees/attendance/add')">
+          <i class="fa fa-plus"></i> Add Employee Attendance</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+    <div class="card form-group">
+      <div class="card-header" style="background: #fff;border: none;">
+        <div class="row">
+            <div class="col-md-2">
+                <select class="form-control" [(ngModel)]="employee.month" name="month">
+                  <option value="">Select Month</option>
+                  <option *ngFor="let month of months" value="{{month.value}}">{{month.text}}</option>
+                </select>
+            </div>
+          <div class="col-md-2">
+              <select class="form-control" [(ngModel)]="employee.year" name="year"  >
+                <option value="">Select Year</option>
+                <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+              </select>
+          </div>
+          <div class="col-md-3">
+            <ng-select class="form-control" [(ngModel)]="employee.emp" placeholder="Select Employee" [clearable]="false" name="employee">
+              <ng-option *ngFor="let employee of employee_list" [value]="employee.id">{{employee.first_name}} {{employee.last_name}}</ng-option>
+            </ng-select>
+          </div>
+          <div class="col-md-3">
+            <button type="submit" class="btn btn-primary" (click)="getEmployeeAttendanceList()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-9">
+                <h5>Employee Monthly Attendance</h5>
+              </div>
+            </div>
+          </div>
+          <table class="card-body table table-hover table-sm table-bordered">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Employee Name</th>
+                <th>In Time</th>
+                <th>Out Time</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let employee_attendance of employee_attendance_list ; let i = index">
+                <td>{{employee_attendance.date | date}}</td>
+                <td>{{employee_attendance.employee_details.name}}</td>
+                <td>{{employee_attendance.in_time}}</td>
+                <td>{{employee_attendance.out_time}}</td>
+                
+                <td>
+                  <a href="javascript:void(0);" class="anchor-action" title="Edit" name="Edit" [routerLink]="['/employees/attendance/edit', employee_attendance.id]">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr *ngIf="employee_attendance_list.length == 0">
+                  <td colspan="5" class="text-center">No record found</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</loading>

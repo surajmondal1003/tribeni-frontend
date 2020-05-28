@@ -1,0 +1,376 @@
+<loading [state]="loading">
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="page-header">Purchase Order Report</h4>
+      </div>
+      <div class="col-md-6 pull-right" style="text-align: right">
+        <app-help [heading]="help_heading" [description]="help_description"></app-help>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <hr/>
+    <div>
+      <div class="row">
+        <div class="col-md-12">
+          <form role="form">
+            <div class="card bg-light mb-3">
+              <div class="card-header" style="background-color:#868e96; color: #fff;">Purchase Order Report</div>
+              <div class="card-body">
+                <div class="card bg-light mb-3">
+                  <div class="card-header">Search Criteria</div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="form-group col-md-3">
+                        <label>Purchase Order no.</label>
+                        <ng-select class="form-control" placeholder="Select Order" (change)="orderChange($event)" [clearable]="false" name="order">
+                          <ng-option [value]="''">Select Order</ng-option>
+                          <ng-option *ngFor="let order of order_list" [value]="order.id">{{order.purchase_order_no}}</ng-option>
+                        </ng-select>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>Purchase Order Date</label>
+                        <div class="input-group">
+                          <input class="form-control" placeholder="yyyy-mm-dd" name="order_date" ngbDatepicker #r="ngbDatepicker" [(ngModel)]="order_date">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="r.toggle()" type="button">
+                              <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>From Date</label>
+                        <div class="input-group">
+                          <input class="form-control" placeholder="yyyy-mm-dd" name="from_date" ngbDatepicker #f="ngbDatepicker" [(ngModel)]="from_date">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="f.toggle()" type="button">
+                              <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>To Date</label>
+                        <div class="input-group">
+                          <input class="form-control" placeholder="yyyy-mm-dd" name="to_date" ngbDatepicker #t="ngbDatepicker" [(ngModel)]="to_date">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="t.toggle()" type="button">
+                              <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>By Company.</label>
+                        <ng-select class="form-control" placeholder="Select Company" [clearable]="false" name="company" [(ngModel)]="company">
+                          <ng-option [value]="''">Select Company</ng-option>
+                          <ng-option *ngFor="let company of company_list" [value]="company.id">{{company.company_name}}</ng-option>
+                        </ng-select>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label>By Project</label>
+                        <ng-select class="form-control" placeholder="Select Project" [clearable]="false" name="project" [(ngModel)]="project">
+                          <ng-option [value]="''">Select Project</ng-option>
+                          <ng-option *ngFor="let project of project_list" [value]="project.id">{{project.project_name}}</ng-option>
+                        </ng-select>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>By Vendor</label>
+                        <ng-select class="form-control" placeholder="Select Vendor" [clearable]="false" name="vendor" [(ngModel)]="vendor">
+                          <ng-option [value]="''">Select Vendor</ng-option>
+                          <ng-option *ngFor="let vendor of vendor_list" [value]="vendor.id">{{vendor.vendor_fullname}}</ng-option>
+                        </ng-select>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>By Staus</label>
+                        <select class="form-control" name="status" [(ngModel)]="status">
+                          <option value="">Select Staus</option>
+                          <option value="1">Active</option>
+                          <option value="0">Inactive</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>By Approval</label>
+                        <select class="form-control" name="approve" [(ngModel)]="approve">
+                          <option value="">Select Approval</option>
+                          <option value="1">Approved</option>
+                          <option value="2">Dis-approved</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-12">
+                          <label>&nbsp;&nbsp;&nbsp;</label>
+                          <div class="clearfix"></div>
+                          <button type="submit" class="btn btn-primary pull-right" (click)="search()" [disabled]="order_details_key">Search</button>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="card bg-light mb-3" *ngIf="Search_order_list_key">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-md-9">
+                        <h5>Results</h5>
+                      </div>
+                      <div class="col-md-3 text-right">
+                        <!-- <button type="submit" class="btn btn-default">Excel</button> -->
+                        <!-- <button type="submit" class="btn btn-default">PDF</button> -->
+                        <!-- <button type="submit" class="btn btn-default">Print</button> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <table class="card-body table table-hover table-sm table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Sl.No.</th>
+                            <th>PO No
+                              <span class="info" ngbTooltip="Purchase Order Number">i</span>
+                            </th>
+                            <th>Company</th>
+                            <th>Project</th>
+                            <th>Vendor</th>
+                            <th>PO Raised Date
+                              <span class="info" ngbTooltip="Purchase Order Raised Date">i</span>
+                            </th>
+                            <th>PO Raised By
+                              <span class="info" ngbTooltip="Purchase Order Raised By">i</span>
+                            </th>
+                            <th>Status</th>
+                            <th>Is approved</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let report of SearchOrderList ; let i = index">
+                            <th scope="row">{{itemNo + i +1}}</th>
+                            <td>{{report.purchase_order_no}}</td>
+                            <td>{{report.company.company_name}}</td>
+                            <td>{{report.requisition.project_name}}</td>
+                            <td>{{report.vendor.vendor_fullname}}</td>
+                            <td>{{report.created_at | date:'dd-MM-yyyy'}}</td>
+                            <td>{{report.created_by.first_name}}</td>
+                            <td>
+                              <span *ngIf="report.status">Active</span>
+                              <span *ngIf="!report.status">Inactive</span>
+                            </td>
+                            <td>
+                              <span *ngIf="report.is_approve == 1">Yes</span>
+                              <span *ngIf="report.is_approve == 0">No</span>
+                            </td>
+                          </tr>
+                          <tr *ngIf="SearchOrderList.length == 0">
+                            <td colspan="10" class="text-center">No record found</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="col-md-12" *ngIf="totalSearchOrderList > 0">
+                        <div class="pagination-msg">
+                          <p>Showing {{lower_count}} to {{upper_count}} of {{totalSearchOrderList}} entries</p>
+                        </div>
+                      </div>
+                      <div class="col-md-12" *ngIf="totalSearchOrderList > itemPerPage">
+                        <div class="pull-right">
+                          <ngb-pagination [collectionSize]="totalSearchOrderList" [maxSize]="paginationMaxSize" [(page)]="defaultPagination" (pageChange)="pagination()"
+                            size="sm"></ngb-pagination>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card bg-light mb-3" *ngIf="order_details_key">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-md-9">
+                        <h5>Purchase Order Number : {{orderDetails.purchase_order_no}}</h5>
+                      </div>
+                      <div class="col-md-3 text-right">
+                        <!-- <button type="submit" class="btn btn-default">Excel</button> -->
+                        <!-- <button type="submit" class="btn btn-default">PDF</button> -->
+                        <!-- <button type="submit" class="btn btn-default">Print</button> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <table class="card-body table table-sm table-bordered">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <label>PO Number : </label>
+                              </td>
+                              <td>
+                                <label>{{orderDetails .purchase_order_no}}</label>
+                              </td>
+                              <td>
+                                <label>PR Number : </label>
+                              </td>
+                              <td>
+                                <label>{{orderDetails.requisition.requisition_number}}</label>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <label>Company : </label>
+                              </td>
+                              <td>
+                                <label>{{orderDetails.company.company_name}}</label>
+                              </td>
+                              <td>
+                                <label>Project : </label>
+                              </td>
+                              <td>
+                                <label>{{orderDetails.requisition.project_name}}</label>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <label>Vendor Name : </label>
+                              </td>
+                              <td>
+                                <label>{{orderDetails.vendor.vendor_fullname}}</label>
+                              </td>
+                              <td>
+                                <label>Vendor Address : </label>
+                              </td>
+                              <td>
+                                <label>{{orderDetails.vendor_address.address}}</label>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <label>PO Date : </label>
+                              </td>
+                              <td>
+                                <label>{{orderDetails.quotation_date | date:'yyy-MM-dd'}}</label>
+                              </td>
+                              <td>
+                                <label>PR Raised Date : </label>
+                              </td>
+                              <td>
+                                <label>{{getRequisitionDate(orderDetails.requisition.requisition_number)}}</label>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <label>Indent Raised By :</label>
+                              </td>
+                              <td colspan="3">
+                                <label>{{orderDetails.created_by.first_name}}</label>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-md-12">
+                        <h4>Items ordered</h4>
+                        <hr/>
+                      </div>
+                      <div class="col-md-12">
+                        <table class="card-body table table-hover table-sm table-bordered">
+                          <thead>
+                            <tr>
+                              <th>
+                                <label>Material Group</label>
+                              </th>
+                              <th>
+                                <label>Material</label>
+                              </th>
+                              <th>
+                                <label>Quantity</label>
+                              </th>
+                              <th>
+                                <label>Rate/Unit</label>
+                              </th>
+                              <th>
+                                <label>Material Value</label>
+                              </th>
+                              <th>
+                                <label>Disc(%)</label>
+                              </th>
+                              <th>
+                                <label>Disc Amount</label>
+                              </th>
+                              <th>
+                                <label>IGST(%)</label>
+                              </th>
+                              <th>
+                                <label>SGST(%)</label>
+                              </th>
+                              <th>
+                                <label>CGST(%)</label>
+                              </th>
+                              <th>
+                                <label>GST Amount</label>
+                              </th>
+                              <th>
+                                <label>Sub Total</label>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of orderDetails.purchase_order_detail">
+                              <td>
+                                <label>{{item.material.material_type.material_type}}</label>
+                              </td>
+                              <td>
+                                <label>{{item.material.material_fullname}} ({{item.material.material_code}})</label>
+                              </td>
+                              <td>
+                                <label>{{item.order_quantity}}</label>
+                              </td>
+                              <td>
+                                <label>{{item.rate}}</label>
+                              </td>
+                              <td>
+                                <label>{{item.material_value}}</label>
+                              </td>
+                              <td>
+                                <label>{{item.discount_percent}}</label>
+                              </td>
+                              <td>
+                                <label>{{item.discount_value}}</label>
+                              </td>
+                              <td>
+                                <label>{{item.igst}}</label>
+                              </td>
+                              <td>
+                                <label>{{item.sgst}}</label>
+                              </td>
+                              <td>
+                                <label>{{item.cgst}}</label>
+                              </td>
+                              <td>
+                                <label>{{item.gst_amount}}</label>
+                              </td>
+                              <td>
+                                <label>{{item.sub_total}}</label>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="10"></td>
+                              <td>Grand Total</td>
+                              <td>{{orderDetails.grand_total}}</td>
+                            </tr>
+                            <tr>
+                              <td colspan="12">Amount in words :
+                                <strong>{{orderDetails.grand_total_words}}</strong>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</loading>

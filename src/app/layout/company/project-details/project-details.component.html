@@ -1,0 +1,132 @@
+<loading [state]="loading">
+  <div>
+      <div style="padding-top: 20px;">
+          <div class="col-md-6 offset-md-6 pull-right" style="text-align: right">
+              <app-help [heading]="help_heading" [description]="help_description"></app-help>
+              <button type="button" class="btn btn-primary" (click)="btnClickNav()">
+                  <i class="fa fa-arrow-left"></i> Back</button>
+          </div>
+          <div class="clearfix"></div>
+      </div>
+      <hr/>
+      <div>
+          <div class="row" *ngIf="visible_key">
+            <div class="col-md-12">
+              <div class="card bg-light mb-3">
+                <div class="card-header" style="background-color:#868e96; color: #fff;">Project Name : {{company_project.project_name}} </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <table class="card-body table table-sm table-bordered">
+    
+                        <tbody>
+                          <tr>
+                            <td>
+                              <label>Project Name : </label>
+                            </td>
+                            <td>
+                              <label>{{company_project.project_name}}</label>
+                            </td>
+                            <td>
+                              <label>Address : </label>
+                            </td>
+                            <td>
+                              <label>{{company_project.project_address}}</label>
+                            </td>
+    
+                          </tr>
+                          <tr>
+                            <td>
+                              <label>City : </label>
+                            </td>
+                            <td>
+                              <label>{{company_project.project_city}}</label>
+                            </td>
+                            <td>
+                              <label>Pin : </label>
+                            </td>
+                            <td>
+                              <label>{{company_project.project_pincode}}</label>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <label>Contact No : </label>
+                            </td>
+                            <td>
+                              <label>{{company_project.project_contact_no}}</label>
+                            </td>
+                            <td>
+                              <label>Contact Person : </label>
+                            </td>
+                            <td>
+                              <label>{{company_project.contact_person}}</label>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <label>Project Engineer: </label>
+                            </td>
+                            <td>
+                              <label>{{company_project.engineer_name}}</label>
+                            </td>
+                          </tr>
+                        </tbody>
+    
+                      </table>
+                    </div>
+                    <div class="col-md-12">
+                      <h4>Material Line</h4>
+                      <hr/>
+                    </div>
+                    <div class="col-md-12">
+                      <table class="card-body table table-hover table-sm table-bordered">
+                        <thead>
+                          <tr>
+                            <th>
+                              <label>Material Group</label>
+                            </th>
+                            <th>
+                              <label>Material</label>
+                            </th>
+                            <th>
+                              <label>Quantity</label>
+                            </th>
+                            <th>
+                              <label>Rate</label>
+                            </th>
+                            <th>
+                              <label>BOQ Ref</label>
+                            </th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let project_details_obj of company_project.project_details">
+                            <td>
+                              <label>{{project_details_obj.materialtype.material_type}}</label>
+                            </td>
+                            <td>
+                              <label>{{project_details_obj.material.material_fullname}} ( {{project_details_obj.material.material_code}} )</label>
+                            </td>
+                            <td>
+                              <label>{{project_details_obj.quantity}}</label>
+                            </td>
+                            <td>
+                              <label>{{project_details_obj.rate}}</label>
+                            </td>
+                            <td>
+                              <label>{{project_details_obj.boq_ref}}</label>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</loading>

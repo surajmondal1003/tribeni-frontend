@@ -1,0 +1,76 @@
+<loading [state]="loading">
+    <div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="page-header">Bank Edit</h4>
+            </div>
+            <div class="col-md-6 pull-right" style="text-align: right">
+                <app-help [heading]="help_heading" [description]="help_description"></app-help>
+                <button type="button" class="btn btn-primary" (click)="btnClickNav('banks')">
+                    <i class="fa fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <hr/>
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form role="form" [formGroup]="form">
+                        <div class="card bg-light mb-3">
+                            <div class="card-header" style="background-color:#868e96; color: #fff;">Bank Add</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-3">
+                                        <label>Company</label>
+                                        <select class="form-control" [(ngModel)]="banks.company" name="company" formControlName="company" [ngClass]="displayFieldCss('company')">
+                                            <option value="">Select Company</option>
+                                            <option *ngFor="let companyObj of companyList ;" value="{{companyObj.id}}">{{companyObj.company_name}}</option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="form.controls['company'].hasError('required')">
+                                            Please select company
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Bank Name</label>
+                                        <input class="form-control" [(ngModel)]="banks.bank_name" name="bank_name" formControlName="bank_name" [ngClass]="displayFieldCss('bank_name')"
+                                            placeholder="Bank Name">
+
+                                        <div class="invalid-feedback" *ngIf="form.controls['bank_name'].hasError('required')">
+                                            Please enter bank name
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Bank Branch</label>
+                                        <input class="form-control" [(ngModel)]="banks.bank_branch" name="bank_branch" formControlName="bank_branch" [ngClass]="displayFieldCss('bank_branch')"
+                                            placeholder="Bank Branch">
+
+                                        <div class="invalid-feedback" *ngIf="form.controls['bank_branch'].hasError('required')">
+                                            Please enter bank branch
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Bank IFSC</label>
+                                        <input class="form-control" [(ngModel)]="banks.bank_ifsc" name="bank_ifsc" formControlName="bank_ifsc" [ngClass]="displayFieldCss('bank_ifsc')"
+                                            placeholder="Bank Branch">
+
+                                        <div class="invalid-feedback" *ngIf="form.controls['bank_ifsc'].hasError('required')">
+                                            Please enter bank IFSC
+                                        </div>
+                                    </div>
+                                    <!-- <div class="form-group col-md-2">
+                              <label>Opening Balance</label>
+                              <input class="form-control" [(ngModel)]="banks.opening_balance" name="opening_balance " placeholder="Opening Balance">
+                            </div> -->
+                                    <div class="form-group col-md-12" style="text-align: right">
+                                        <button type="submit" class="btn btn-primary" (click)="updateBank()">Submit</button>
+                                        <button type="reset" class="btn btn-secondary" (click)="reSet()">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</loading>
